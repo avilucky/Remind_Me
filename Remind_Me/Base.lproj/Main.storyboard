@@ -157,6 +157,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odH-jt-GWa">
+                                <frame key="frameInset" minX="16" minY="50" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="close"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0LX-rX-wVu">
                                 <frame key="frameInset" minX="108" minY="514" width="158" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -172,11 +177,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OvE-99-kzB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-263" y="295"/>
+            <point key="canvasLocation" x="-263.19999999999999" y="294.60269865067471"/>
         </scene>
     </scenes>
     <resources>
         <image name="add" width="16" height="16"/>
+        <image name="close" width="32" height="32"/>
         <image name="settings" width="16" height="16"/>
         <image name="user" width="128" height="128"/>
         <image name="view" width="16" height="16"/>
