@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */; };
 		CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */; };
 		CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881331DBE6FCB00AA37D8 /* ViewController.swift */; };
 		CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA881351DBE6FCB00AA37D8 /* Main.storyboard */; };
 		CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEA881381DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld */; };
 		CEA8813C1DBE6FCB00AA37D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEA8813B1DBE6FCB00AA37D8 /* Assets.xcassets */; };
 		CEA8813F1DBE6FCB00AA37D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA8813D1DBE6FCB00AA37D8 /* LaunchScreen.storyboard */; };
+		CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC594341DC517C20061A6DA /* RegisterViewController.swift */; };
+		CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC594361DC521DD0061A6DA /* HomeViewController.swift */; };
+		CEE89C861DC50DBB000DD80B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEE89C851DC50DBB000DD80B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Remind_Me.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B334C8EE58D828184840E2B /* Pods-Remind_Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.debug.xcconfig"; sourceTree = "<group>"; };
+		3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
 		CEA8812E1DBE6FCA00AA37D8 /* Remind_Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remind_Me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEA881331DBE6FCB00AA37D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +31,10 @@
 		CEA8813B1DBE6FCB00AA37D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEA8813E1DBE6FCB00AA37D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEA881401DBE6FCB00AA37D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC594341DC517C20061A6DA /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		CEC594361DC521DD0061A6DA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		CEC594381DC52DB90061A6DA /* Remind_Me.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Remind_Me.entitlements; sourceTree = "<group>"; };
+		CEE89C851DC50DBB000DD80B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Remind_Me/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +42,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05338161134BE297AB4C73D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		595BB1A5DD7520A9768B414A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2B334C8EE58D828184840E2B /* Pods-Remind_Me.debug.xcconfig */,
+				3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CEA881251DBE6FC900AA37D8 = {
 			isa = PBXGroup;
 			children = (
+				CEE89C851DC50DBB000DD80B /* GoogleService-Info.plist */,
 				CEA881301DBE6FCA00AA37D8 /* Remind_Me */,
 				CEA8812F1DBE6FCA00AA37D8 /* Products */,
+				595BB1A5DD7520A9768B414A /* Pods */,
+				05338161134BE297AB4C73D0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +88,7 @@
 		CEA881301DBE6FCA00AA37D8 /* Remind_Me */ = {
 			isa = PBXGroup;
 			children = (
+				CEC594381DC52DB90061A6DA /* Remind_Me.entitlements */,
 				CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */,
 				CEA881331DBE6FCB00AA37D8 /* ViewController.swift */,
 				CEA881351DBE6FCB00AA37D8 /* Main.storyboard */,
@@ -63,6 +96,8 @@
 				CEA8813D1DBE6FCB00AA37D8 /* LaunchScreen.storyboard */,
 				CEA881401DBE6FCB00AA37D8 /* Info.plist */,
 				CEA881381DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld */,
+				CEC594341DC517C20061A6DA /* RegisterViewController.swift */,
+				CEC594361DC521DD0061A6DA /* HomeViewController.swift */,
 			);
 			path = Remind_Me;
 			sourceTree = "<group>";
@@ -74,9 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEA881431DBE6FCB00AA37D8 /* Build configuration list for PBXNativeTarget "Remind_Me" */;
 			buildPhases = (
+				17CFB7E31719C6FDD521AF12 /* [CP] Check Pods Manifest.lock */,
 				CEA8812A1DBE6FCA00AA37D8 /* Sources */,
 				CEA8812B1DBE6FCA00AA37D8 /* Frameworks */,
 				CEA8812C1DBE6FCA00AA37D8 /* Resources */,
+				FD088C6C30C703BF56808B3A /* [CP] Embed Pods Frameworks */,
+				890CBD5F5ED250799FFA3D9B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -101,6 +139,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 625732G463;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -128,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA8813F1DBE6FCB00AA37D8 /* LaunchScreen.storyboard in Resources */,
+				CEE89C861DC50DBB000DD80B /* GoogleService-Info.plist in Resources */,
 				CEA8813C1DBE6FCB00AA37D8 /* Assets.xcassets in Resources */,
 				CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */,
 			);
@@ -135,14 +179,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17CFB7E31719C6FDD521AF12 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		890CBD5F5ED250799FFA3D9B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD088C6C30C703BF56808B3A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CEA8812A1DBE6FCA00AA37D8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */,
 				CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */,
 				CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
+				CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +355,10 @@
 		};
 		CEA881441DBE6FCB00AA37D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B334C8EE58D828184840E2B /* Pods-Remind_Me.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
 				DEVELOPMENT_TEAM = 625732G463;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -275,8 +371,10 @@
 		};
 		CEA881451DBE6FCB00AA37D8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
 				DEVELOPMENT_TEAM = 625732G463;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -306,6 +404,7 @@
 				CEA881451DBE6FCB00AA37D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

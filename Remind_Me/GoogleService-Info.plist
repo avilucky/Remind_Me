@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>791125875525-i6gu34s30scp83b1ihbmccjhptbqlp2s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.791125875525-i6gu34s30scp83b1ihbmccjhptbqlp2s</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCHbz8tk1ILDvCHnSMPsEJx7MZGOwVFGDo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>791125875525</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.uiowa.Remind-Me</string>
+	<key>PROJECT_ID</key>
+	<string>remindme-d2c58</string>
+	<key>STORAGE_BUCKET</key>
+	<string>remindme-d2c58.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:791125875525:ios:46e3be8ecbb4ed31</string>
+	<key>DATABASE_URL</key>
+	<string>https://remindme-d2c58.firebaseio.com</string>
+</dict>
+</plist>

@@ -7,16 +7,55 @@
 //
 
 import UIKit
+import Firebase
 import CoreData
+
+let defaults = UserDefaults.standard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var ref: FIRDatabaseReference!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FIRApp.configure()
+        
+        ref = FIRDatabase.database().reference()
+
+        // enable key sharing from project settings if this doesn't print anything
+        ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value)
+        })
+        
+        // we check for any username associated with the phone
+        let username:String? = defaults.object(forKey: "username") as? String
+        
+        // for testing purpose comment the above declaration and use the below one
+        // let username:String? = "avinash1"
+        
+        print("User: \(username)")
+        
+        if username != nil{
+            // if yes that is phone has already registered for the app, then look if the 
+            // details of the users exist on firebase
+            ref.child("users").child(username!).observeSingleEvent(of: .value, with: { (snapshot) in
+                // if user details exist on firebase then set the root controller to the HomeViewController
+                //print("Sanpshot children count: \(snapshot.childrenCount)")
+                if snapshot.childrenCount > 0{
+                    self.window = UIWindow(frame: UIScreen.main.bounds)
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+                    
+                    self.window?.rootViewController = initialViewController
+                    self.window?.makeKeyAndVisible()
+                }
+            })
+        }
+        
         return true
     }
 
