@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6Xe-va-EMi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6Xe-va-EMi">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Register View Controller-->
         <scene sceneID="RoV-kH-tCc">
             <objects>
-                <viewController id="6Xe-va-EMi" customClass="ViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterViewController" id="6Xe-va-EMi" customClass="RegisterViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bfk-5w-Y1g"/>
                         <viewControllerLayoutGuide type="bottom" id="ErH-AF-Egc"/>
@@ -41,7 +41,8 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="buN-OT-uoE" kind="presentation" id="Gz0-Lc-b4d"/>
+                                    <action selector="registerUser" destination="6Xe-va-EMi" eventType="touchUpInside" id="FJK-em-roF"/>
+                                    <segue destination="buN-OT-uoE" kind="presentation" identifier="register" id="Gz0-Lc-b4d"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Phone Number" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JXU-us-y7w">
@@ -54,6 +55,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.7516675591468811" green="0.9219171404838562" blue="0.93945735692977905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="phoneNumberLabel" destination="JXU-us-y7w" id="Lcr-1C-E3X"/>
+                        <outlet property="usernameLabel" destination="mkN-9g-Yp8" id="Uc0-B2-Lxw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4U7-uw-Xpw" sceneMemberID="firstResponder"/>
             </objects>
@@ -299,10 +304,10 @@
             </objects>
             <point key="canvasLocation" x="2833" y="210"/>
         </scene>
-        <!--View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="gdL-Vg-x9y">
             <objects>
-                <viewController id="buN-OT-uoE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="buN-OT-uoE" customClass="HomeViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1HJ-Pf-L0J"/>
                         <viewControllerLayoutGuide type="bottom" id="afO-fb-Ejt"/>
@@ -759,6 +764,6 @@
         <image name="view" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9Qw-HR-rjg"/>
+        <segue reference="Gz0-Lc-b4d"/>
     </inferredMetricsTieBreakers>
 </document>
