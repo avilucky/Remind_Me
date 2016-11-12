@@ -429,7 +429,7 @@
         <!--Landmark Based-->
         <scene sceneID="tdd-t9-3XC">
             <objects>
-                <viewController id="qj4-Ue-teg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandmarkBasedRemindersViewController" id="qj4-Ue-teg" customClass="LandmarkBasedRemindersViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6ej-9D-Geu"/>
                         <viewControllerLayoutGuide type="bottom" id="frv-gH-zSJ"/>
@@ -477,6 +477,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveReminder" destination="qj4-Ue-teg" eventType="touchUpInside" id="ZXw-Xz-76M"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin Location on Map" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tpx-Wp-soq">
                                 <frame key="frameInset" minX="16" minY="357" width="343" height="30"/>
@@ -502,6 +505,11 @@
                         <color key="backgroundColor" red="0.7516675591468811" green="0.9219171404838562" blue="0.93945735692977905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Landmark Based" image="location" selectedImage="location" id="IbT-QP-tmV"/>
+                    <connections>
+                        <outlet property="date" destination="5LZ-D0-uep" id="cAe-Yh-cnT"/>
+                        <outlet property="eventTypePicker" destination="CCN-gM-6Hq" id="oaT-oc-Wji"/>
+                        <outlet property="notificationDesc" destination="XDT-7c-wbz" id="dVU-ek-Poh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T8f-pA-rRt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -510,7 +518,7 @@
         <!--User Based-->
         <scene sceneID="X71-q2-LwG">
             <objects>
-                <viewController id="Rjg-xA-CY0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserBasedRemindersViewController" id="Rjg-xA-CY0" customClass="UserBasedRemindersViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="k3a-8Q-PMD"/>
                         <viewControllerLayoutGuide type="bottom" id="2o8-wC-G4K"/>
@@ -565,6 +573,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveReminder" destination="Rjg-xA-CY0" eventType="touchUpInside" id="c9y-Iz-Eil"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bG-tQ-tHf">
                                 <frame key="frameInset" minY="50" width="32" height="32"/>
@@ -578,6 +589,11 @@
                         <color key="backgroundColor" red="0.7516675591468811" green="0.9219171404838562" blue="0.93945735692977905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="User Based" image="contact" id="cpL-fI-Z6h"/>
+                    <connections>
+                        <outlet property="date" destination="b3n-Ep-ahf" id="hmt-6P-Bfv"/>
+                        <outlet property="notificationDesc" destination="dEb-Hg-nhr" id="HQa-aZ-5Og"/>
+                        <outlet property="username" destination="vjN-Ky-EA8" id="Tsz-X2-TPz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9a3-Ic-JDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -764,6 +780,6 @@
         <image name="view" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gz0-Lc-b4d"/>
+        <segue reference="9Qw-HR-rjg"/>
     </inferredMetricsTieBreakers>
 </document>

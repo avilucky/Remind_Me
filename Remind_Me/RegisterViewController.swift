@@ -36,6 +36,7 @@ class RegisterViewController: UIViewController {
         if registerSuccess{
             ref.child("users").child(usernameLabel.text!).setValue(["phone": phoneNumberLabel.text!])
             defaults.set(usernameLabel.text!, forKey: "username")
+            currentUser = usernameLabel.text!
         }
     }
     
