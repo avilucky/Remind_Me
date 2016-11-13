@@ -9,12 +9,13 @@
 import UIKit
 import Firebase
 
-class UserBasedRemindersViewController: UIViewController {
+class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
 
     var ref: FIRDatabaseReference!
     
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
+    var placeholderLabel : UILabel!
     @IBOutlet weak var username: UITextField!
     
     override func viewDidLoad() {
@@ -22,9 +23,22 @@ class UserBasedRemindersViewController: UIViewController {
         
         super.viewDidLoad()
 
+        notificationDesc.delegate = self
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "Notification description"
+        placeholderLabel.font = UIFont.italicSystemFont(ofSize: (notificationDesc.font?.pointSize)!)
+        placeholderLabel.sizeToFit()
+        notificationDesc.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 80, y: (notificationDesc.font?.pointSize)! / 2)
+        placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
+        placeholderLabel.isHidden = !notificationDesc.text.isEmpty
         // Do any additional setup after loading the view.
     }
 
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -65,6 +79,8 @@ class UserBasedRemindersViewController: UIViewController {
         
         print(activeReminders)
         print(upcomingReminders)
+        
+        self.performSegue(withIdentifier: "unwindToHomeFromUser", sender: nil)
     }
     
 }
