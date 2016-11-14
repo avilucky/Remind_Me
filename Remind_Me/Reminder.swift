@@ -10,6 +10,17 @@ import Foundation
 
 enum EventType{
     case nearby, reached, leaving
+    
+    static func getEventTypeEnum(eventType: String) -> EventType{
+        print("Event Type: \(eventType)")
+        if eventType == "nearby" {
+            return EventType.nearby
+        }else if eventType == "leaving"{
+            return EventType.leaving
+        }else{
+            return EventType.reached
+        }
+    }
 }
 
 enum ReminderStatus{

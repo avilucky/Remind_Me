@@ -61,10 +61,13 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         
         let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!)
         
+        let forReminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!)
+        
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
-        let forMsg = ref.child("forReminders").child(reminder.forUser).child(msg.key)
+        let forMsg = ref.child("forReminders").child(reminder.forUser).childByAutoId()
         
         reminder.fireBaseIndex = msg.key
+        forReminder.fireBaseIndex = forMsg.key
         
         let value = ["forUser": reminder.forUser!, "byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "reminderStatus": reminder.getReminderStatus()]
         

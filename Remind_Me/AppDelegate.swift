@@ -62,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     self.window?.rootViewController = initialViewController
                     self.window?.makeKeyAndVisible()
+                    
+                    self.updateRemindersForUser()
                 }
             })
         }
@@ -69,6 +71,133 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey("AIzaSyDQxXl3_hh1L2fbM6bnfQrqaaJMxMaX6rM")
 
         return true
+    }
+
+    func updateRemindersForUser(){
+        ref.child("reminders").child(currentUser!).observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Reminders for \(currentUser!): \(snapshot.childrenCount)")
+            
+            if snapshot.childrenCount > 0{
+                let enumerator = snapshot.children
+                while let rest = enumerator.nextObject() as? FIRDataSnapshot{
+                    //print("Firebase Index : \(rest.key)")
+                    //check if Userbased reminder
+                    if rest.hasChild("forUser"){
+                        let forUser = rest.childSnapshot(forPath: "forUser").value as! String
+                        //print("For User: \(forUser)")
+                        let byUser = rest.childSnapshot(forPath: "byUser").value as! String
+                        //print("By User: \(byUser)")
+                        let description = rest.childSnapshot(forPath: "description").value as! String
+                        //print("Notification Description: \(description)")
+                        let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
+                        //print(date)
+                        let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
+                        
+                        let reminder: Reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description)
+                        
+                        reminder.fireBaseIndex = rest.key
+                        
+                        if reminderStatus == "dismissed"{
+                            reminder.reminderStatus = .dismissed
+                            dismissedReminders.append(reminder)
+                        }else if reminder.reminderStatus == .active{
+                            activeReminders.append(reminder)
+                        }else{
+                            upcomingReminders.append(reminder)
+                        }
+                        
+                    }else{
+                        // landmarkbased reminder
+                        //print("landmark based reminder")
+                        
+                        let byUser = rest.childSnapshot(forPath: "byUser").value as! String
+                        //print("By User: \(byUser)")
+                        let description = rest.childSnapshot(forPath: "description").value as! String
+                        //print("Notification Description: \(description)")
+                        let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
+                        //print(date)
+                        let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
+                        
+                        let locationName = rest.childSnapshot(forPath: "locationName").value as! String
+                        
+                        let lat = Double(rest.childSnapshot(forPath: "latitude").value as! String)
+                        
+                        let lon = Double(rest.childSnapshot(forPath: "longitude").value as! String)
+                        
+                        let eveType: EventType = EventType.getEventTypeEnum(eventType: rest.childSnapshot(forPath: "eventType").value as! String)
+                        
+                        let reminder: Reminder = Reminder(byUser: byUser, date: date, description: description, locationName: locationName, latitude: lat!, longitude: lon!, eventType: eveType)
+                        
+                        reminder.fireBaseIndex = rest.key
+                        
+                        if reminderStatus == "dismissed"{
+                            reminder.reminderStatus = .dismissed
+                            dismissedReminders.append(reminder)
+                        }else if reminder.reminderStatus == .active{
+                            activeReminders.append(reminder)
+                        }else{
+                            upcomingReminders.append(reminder)
+                        }
+                    }
+                }
+                
+                let homeViewController = self.window?.rootViewController as! HomeViewController
+                homeViewController.updateActiveReminders()
+                
+                print(activeReminders.count)
+                print(upcomingReminders.count)
+                print(dismissedReminders.count)
+            }
+        })
+        
+        ref.child("forReminders").child(currentUser!).observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Reminders for \(currentUser!): \(snapshot.childrenCount)")
+            
+            if snapshot.childrenCount > 0{
+                let enumerator = snapshot.children
+                while let rest = enumerator.nextObject() as? FIRDataSnapshot{
+                    //print("Firebase Index : \(rest.key)")
+                    
+                    let forUser = rest.childSnapshot(forPath: "forUser").value as! String
+                    //print("For User: \(forUser)")
+                    let byUser = rest.childSnapshot(forPath: "byUser").value as! String
+                    //print("By User: \(byUser)")
+                    let description = rest.childSnapshot(forPath: "description").value as! String
+                    //print("Notification Description: \(description)")
+                    let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
+                    //print(date)
+                    let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
+                        
+                    let reminder: Reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description)
+                        
+                    reminder.fireBaseIndex = rest.key
+                        
+                    if reminderStatus == "dismissed"{
+                        reminder.reminderStatus = .dismissed
+                        dismissedForReminders.append(reminder)
+                    }else if reminder.reminderStatus == .active{
+                        activeForReminders.append(reminder)
+                    }else{
+                        upcomingForReminders.append(reminder)
+                    }
+                }
+                
+                let homeViewController = self.window?.rootViewController as! HomeViewController
+                homeViewController.updateActiveReminders()
+                
+                print(activeForReminders.count)
+                print(upcomingForReminders.count)
+                print(dismissedForReminders.count)
+            }
+        })
+    }
+    
+    func getDateFromString(_ dateString: String) -> Date{
+        //print("Date: \(dateString)")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +zzzz"
+        
+        return dateFormatter.date(from: dateString)!
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
