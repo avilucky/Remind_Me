@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import CoreData
+import GoogleMaps
+import GooglePlaces
 
 var activeReminders: [Reminder] = []
 var activeForReminders: [Reminder] = []
@@ -63,7 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
         }
-        
+        GMSServices.provideAPIKey("AIzaSyDQxXl3_hh1L2fbM6bnfQrqaaJMxMaX6rM")
+        GMSPlacesClient.provideAPIKey("AIzaSyDQxXl3_hh1L2fbM6bnfQrqaaJMxMaX6rM")
+
         return true
     }
 

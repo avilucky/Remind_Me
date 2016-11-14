@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */; };
+		CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073041DDA5A9E00900B79 /* MapsViewController.swift */; };
+		CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */; };
 		CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */; };
 		CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881331DBE6FCB00AA37D8 /* ViewController.swift */; };
 		CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA881351DBE6FCB00AA37D8 /* Main.storyboard */; };
@@ -26,6 +28,8 @@
 		0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Remind_Me.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B334C8EE58D828184840E2B /* Pods-Remind_Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.debug.xcconfig"; sourceTree = "<group>"; };
 		3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
+		CC5073041DDA5A9E00900B79 /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
+		CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		CEA8812E1DBE6FCA00AA37D8 /* Remind_Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remind_Me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEA881331DBE6FCB00AA37D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 		CEA881301DBE6FCA00AA37D8 /* Remind_Me */ = {
 			isa = PBXGroup;
 			children = (
+				CC5073041DDA5A9E00900B79 /* MapsViewController.swift */,
+				CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */,
 				CEC594381DC52DB90061A6DA /* Remind_Me.entitlements */,
 				CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */,
 				CEA881331DBE6FCB00AA37D8 /* ViewController.swift */,
@@ -244,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */,
 				CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */,
 				CEDC2D1E1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift in Sources */,
 				CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */,
@@ -251,6 +258,7 @@
 				CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
 				CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */,
+				CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */,
 				CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
