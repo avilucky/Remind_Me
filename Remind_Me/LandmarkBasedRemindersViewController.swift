@@ -77,7 +77,7 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         // TODO validation needs to be applied, change hardcoded values locationName, latitude and longitude
         // and accordingly should override shouldPerformSegue
         
-        let eveType: EventType = getEventType(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
+        let eveType: EventType = EventType.getEventTypeEnum(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
         
         let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: "test", latitude: 4.63535, longitude: 53.234242, eventType: eveType)
         
@@ -99,16 +99,5 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromLandMark", sender: nil)
-    }
-    
-    func getEventType(eventType: String) -> EventType{
-        print("Event Type: \(eventType)")
-        if eventType == "nearby" {
-            return EventType.nearby
-        }else if eventType == "leaving"{
-            return EventType.leaving
-        }else{
-            return EventType.reached
-        }
     }
 }
