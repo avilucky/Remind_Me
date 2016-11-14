@@ -6,7 +6,9 @@ target 'Remind_Me' do
   use_frameworks!
 
   # Pods for Remind_Me
-
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
 end
 pod 'Firebase/Core'
 pod 'Firebase/Database'
