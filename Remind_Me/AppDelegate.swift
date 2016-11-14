@@ -10,7 +10,15 @@ import UIKit
 import Firebase
 import CoreData
 
+var activeReminders: [Reminder] = []
+var activeForReminders: [Reminder] = []
+var dismissedReminders: [Reminder] = []
+var dismissedForReminders: [Reminder] = []
+var upcomingReminders: [Reminder] = []
+var upcomingForReminders: [Reminder] = []
+
 let defaults = UserDefaults.standard
+var currentUser: String? = defaults.object(forKey: "username") as? String
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // we check for any username associated with the phone
-        let username:String? = defaults.object(forKey: "username") as? String
+        let username:String? = currentUser
         
         // for testing purpose comment the above declaration and use the below one
         // let username:String? = "avinash1"

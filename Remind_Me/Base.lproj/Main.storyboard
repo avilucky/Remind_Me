@@ -336,6 +336,32 @@
                                 <frame key="frameInset" minY="82" width="375" height="536"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="remindercell" textLabel="Zy2-un-WIo" detailTextLabel="Iai-EG-TIx" style="IBUITableViewCellStyleSubtitle" id="S6y-Wd-ucm">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S6y-Wd-ucm" id="zVk-Pg-khA">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zy2-un-WIo">
+                                                    <frame key="frameInset" minX="15" minY="4" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Iai-EG-TIx">
+                                                    <frame key="frameInset" minX="15" minY="25" width="44" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5au-pF-KZ5">
                                 <frame key="frameInset" minX="8" minY="631" width="70" height="22"/>
@@ -372,6 +398,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.75166755910000005" green="0.92191714049999995" blue="0.93945735689999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="homeViewTable" destination="jjt-wp-L2e" id="PFm-Z5-uTe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O00-Ub-FKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -429,7 +458,7 @@
         <!--Landmark Based-->
         <scene sceneID="tdd-t9-3XC">
             <objects>
-                <viewController id="qj4-Ue-teg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandmarkBasedRemindersViewController" id="qj4-Ue-teg" customClass="LandmarkBasedRemindersViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6ej-9D-Geu"/>
                         <viewControllerLayoutGuide type="bottom" id="frv-gH-zSJ"/>
@@ -462,7 +491,7 @@
                                     <!--2016-10-24 19:56:40 +0000-->
                                 </date>
                             </datePicker>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Notification Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XDT-7c-wbz">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XDT-7c-wbz">
                                 <frame key="frameInset" minX="16" minY="196" width="343" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -477,6 +506,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveReminder" destination="qj4-Ue-teg" eventType="touchUpInside" id="ZXw-Xz-76M"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin Location on Map" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tpx-Wp-soq">
                                 <frame key="frameInset" minX="16" minY="357" width="343" height="30"/>
@@ -495,22 +527,28 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="close"/>
                                 <connections>
-                                    <segue destination="buN-OT-uoE" kind="presentation" id="9Qw-HR-rjg"/>
+                                    <segue destination="nJk-aq-B0c" kind="unwind" identifier="unwindToHomeFromLandMark" unwindAction="prepareForUnwindFor:" id="wC3-ol-0jb"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.7516675591468811" green="0.9219171404838562" blue="0.93945735692977905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Landmark Based" image="location" selectedImage="location" id="IbT-QP-tmV"/>
+                    <connections>
+                        <outlet property="date" destination="5LZ-D0-uep" id="cAe-Yh-cnT"/>
+                        <outlet property="eventTypePicker" destination="CCN-gM-6Hq" id="oaT-oc-Wji"/>
+                        <outlet property="notificationDesc" destination="XDT-7c-wbz" id="dVU-ek-Poh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T8f-pA-rRt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nJk-aq-B0c" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3833" y="-253"/>
         </scene>
         <!--User Based-->
         <scene sceneID="X71-q2-LwG">
             <objects>
-                <viewController id="Rjg-xA-CY0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserBasedRemindersViewController" id="Rjg-xA-CY0" customClass="UserBasedRemindersViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="k3a-8Q-PMD"/>
                         <viewControllerLayoutGuide type="bottom" id="2o8-wC-G4K"/>
@@ -543,7 +581,7 @@
                                     <!--2016-10-24 19:56:40 +0000-->
                                 </date>
                             </datePicker>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Notification Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dEb-Hg-nhr">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dEb-Hg-nhr">
                                 <frame key="frameInset" minX="16" minY="196" width="343" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -565,21 +603,30 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveReminder" destination="Rjg-xA-CY0" eventType="touchUpInside" id="c9y-Iz-Eil"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bG-tQ-tHf">
                                 <frame key="frameInset" minY="50" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="close"/>
                                 <connections>
-                                    <segue destination="buN-OT-uoE" kind="presentation" id="53z-ic-OFc"/>
+                                    <segue destination="ZYy-oO-qEF" kind="unwind" identifier="unwindToHomeFromUser" unwindAction="prepareForUnwindFor:" id="lYQ-nZ-uic"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.7516675591468811" green="0.9219171404838562" blue="0.93945735692977905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="User Based" image="contact" id="cpL-fI-Z6h"/>
+                    <connections>
+                        <outlet property="date" destination="b3n-Ep-ahf" id="hmt-6P-Bfv"/>
+                        <outlet property="notificationDesc" destination="dEb-Hg-nhr" id="HQa-aZ-5Og"/>
+                        <outlet property="username" destination="vjN-Ky-EA8" id="Tsz-X2-TPz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9a3-Ic-JDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ZYy-oO-qEF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3833" y="-1091"/>
         </scene>
@@ -764,6 +811,6 @@
         <image name="view" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gz0-Lc-b4d"/>
+        <segue reference="kTn-uu-Bl5"/>
     </inferredMetricsTieBreakers>
 </document>

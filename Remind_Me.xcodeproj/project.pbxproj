@@ -16,6 +16,9 @@
 		CEA8813F1DBE6FCB00AA37D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA8813D1DBE6FCB00AA37D8 /* LaunchScreen.storyboard */; };
 		CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC594341DC517C20061A6DA /* RegisterViewController.swift */; };
 		CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC594361DC521DD0061A6DA /* HomeViewController.swift */; };
+		CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC2D1B1DCE4C6F007AF322 /* Reminder.swift */; };
+		CEDC2D1E1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC2D1D1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift */; };
+		CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC2D1F1DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift */; };
 		CEE89C861DC50DBB000DD80B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEE89C851DC50DBB000DD80B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +37,9 @@
 		CEC594341DC517C20061A6DA /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		CEC594361DC521DD0061A6DA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		CEC594381DC52DB90061A6DA /* Remind_Me.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Remind_Me.entitlements; sourceTree = "<group>"; };
+		CEDC2D1B1DCE4C6F007AF322 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		CEDC2D1D1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBasedRemindersViewController.swift; sourceTree = "<group>"; };
+		CEDC2D1F1DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandmarkBasedRemindersViewController.swift; sourceTree = "<group>"; };
 		CEE89C851DC50DBB000DD80B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Remind_Me/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,9 @@
 				CEA881381DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld */,
 				CEC594341DC517C20061A6DA /* RegisterViewController.swift */,
 				CEC594361DC521DD0061A6DA /* HomeViewController.swift */,
+				CEDC2D1B1DCE4C6F007AF322 /* Reminder.swift */,
+				CEDC2D1D1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift */,
+				CEDC2D1F1DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift */,
 			);
 			path = Remind_Me;
 			sourceTree = "<group>";
@@ -140,6 +149,9 @@
 						DevelopmentTeam = 625732G463;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -233,9 +245,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */,
+				CEDC2D1E1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift in Sources */,
 				CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */,
 				CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */,
+				CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
+				CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */,
 				CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
