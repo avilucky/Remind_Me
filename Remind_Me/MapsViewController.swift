@@ -50,7 +50,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate, LocateOnTheMap {
             let position = CLLocationCoordinate2DMake(lat, lon)
             let marker = GMSMarker(position: position)
             
-            let camera  = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 10)
+            let camera  = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 16)
             self.googleMapsView.camera = camera
             
             marker.title = title
