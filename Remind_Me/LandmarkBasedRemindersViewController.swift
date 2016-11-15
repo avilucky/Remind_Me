@@ -18,7 +18,12 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
     var placeholderLabel : UILabel!
     @IBOutlet weak var eventTypePicker: UIPickerView!
     
+    @IBOutlet weak var locationAddress: UITextField!
+   
     let pickerData = ["nearby", "leaving", "reached"]
+    
+    var lat: Double = 0
+    var lon: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +84,7 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         
         let eveType: EventType = EventType.getEventTypeEnum(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
         
-        let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: "test", latitude: 4.63535, longitude: 53.234242, eventType: eveType)
+        let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: locationAddress.text!, latitude: lat, longitude: lon, eventType: eveType)
         
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
         
@@ -99,5 +104,25 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromLandMark", sender: nil)
+        
+    }
+
+    @IBAction func unwindToLocation(segue: UIStoryboardSegue) {
+        let defaults = UserDefaults.standard
+        if let add = defaults.string(forKey: "locationAddress")
+        {
+            locationAddress.text! = add
+        }
+        
+        if let latitude: Double = defaults.double(forKey: "latitude")
+        {
+            lat = latitude
+        }
+        
+        if let longitude: Double = defaults.double(forKey: "longitude")
+        {
+            lon = longitude
+        }
+
     }
 }

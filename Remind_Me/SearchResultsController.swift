@@ -7,7 +7,7 @@ protocol LocateOnTheMap{
 
 class SearchResultsController: UITableViewController {
 
-
+    
     
     var searchResults: [String]!
     var delegate: LocateOnTheMap!
@@ -85,9 +85,18 @@ class SearchResultsController: UITableViewController {
                     let lat = location["lat"] as! Double
                     let lon = location["lng"] as! Double
                     
-                    let address = results["formatted_address"] as! String
+                    var address = results["formatted_address"] as! String
                     
                     print(address)
+                    if(address.isEmpty)
+                    {
+                        address = ""
+                    }
+                    
+                    let defaults = UserDefaults.standard
+                    defaults.set(address, forKey: "locationAddress")
+                    defaults.set(lat, forKey: "latitude")
+                    defaults.set(lon, forKey: "longitude")
                     
                    // 4
                     print("From Coordinates: \(lat) and \(lon)")
