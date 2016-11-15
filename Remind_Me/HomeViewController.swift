@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Contacts
+import ContactsUI
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,CNContactPickerDelegate {
 
     @IBOutlet weak var homeViewTable: UITableView!
     var reminders: [Reminder] = []
@@ -85,6 +87,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func prepareForUnwind(for unwindSegue: UIStoryboardSegue) {
             updateActiveReminders()
     }
+    
+    @IBAction func showContacts(sender: AnyObject) {
+        let contactPickerViewController = CNContactPickerViewController()
+        
+        contactPickerViewController.predicateForEnablingContact = NSPredicate(format: "firstname != nil")
+        
+        contactPickerViewController.delegate = self
+        
+        present(contactPickerViewController, animated: true, completion: nil)
+    }
+    
+
+    
+    
     
     /*
     // MARK: - Navigation
