@@ -152,7 +152,7 @@
 				TargetAttributes = {
 					CEA8812D1DBE6FCA00AA37D8 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 625732G463;
+						DevelopmentTeam = G97JR464C6;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -382,7 +382,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
-				DEVELOPMENT_TEAM = 625732G463;
+				DEVELOPMENT_TEAM = G97JR464C6;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.uiowa.Remind-Me";
@@ -398,7 +398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
-				DEVELOPMENT_TEAM = 625732G463;
+				DEVELOPMENT_TEAM = G97JR464C6;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.uiowa.Remind-Me";
