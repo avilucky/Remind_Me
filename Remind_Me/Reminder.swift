@@ -28,7 +28,8 @@ enum ReminderStatus{
 }
 
 class Reminder{
-    var fireBaseIndex: String!
+    var fireBaseForIndex: String!
+    var fireBaseByIndex: String!
     var forUser: String!
     var byUser: String
     var date: Date
@@ -42,9 +43,10 @@ class Reminder{
     
     // this initializer will be used never , kept 
     // for reference, TODO will be removed in the final phase
-    init(fireBaseIndex: String, forUser: String, byUser: String, date: Date, description: String, locationName: String, latitude: Double, longitude: Double, eventType: EventType, reminderStatus: ReminderStatus) {
+    init(fireBaseForIndex: String, fireBaseByIndex: String, forUser: String, byUser: String, date: Date, description: String, locationName: String, latitude: Double, longitude: Double, eventType: EventType, reminderStatus: ReminderStatus) {
         
-        self.fireBaseIndex = fireBaseIndex
+        self.fireBaseForIndex = fireBaseForIndex
+        self.fireBaseByIndex = fireBaseByIndex
         self.forUser = forUser
         self.byUser = byUser
         self.date = date
@@ -57,7 +59,7 @@ class Reminder{
     }
     
     // this initializer will be used when saving user based reminders
-    init(forUser: String, byUser: String, date: Date, description: String) {
+    init(forUser: String, byUser: String, date: Date, description: String, latitude: Double, longitude: Double) {
         self.forUser = forUser
         self.byUser = byUser
         self.date = date

@@ -59,25 +59,23 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         // TODO validation needs to be applied
         // and accordingly should override shouldPerformSegue
         
-        let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!)
-        
-        let forReminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!)
+        let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!, latitude: 0.0, longitude: 0.0)
         
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
         let forMsg = ref.child("forReminders").child(reminder.forUser).childByAutoId()
         
-        reminder.fireBaseIndex = msg.key
-        forReminder.fireBaseIndex = forMsg.key
+        reminder.fireBaseByIndex = msg.key
+        reminder.fireBaseForIndex = forMsg.key
         
-        let value = ["forUser": reminder.forUser!, "byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "reminderStatus": reminder.getReminderStatus()]
+        let value = ["forUser": reminder.forUser!, "fireBaseByIndex": reminder.fireBaseByIndex!, "fireBaseForIndex": reminder.fireBaseForIndex!, "byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "latitude": "0.0", "longitude": "0.0", "reminderStatus": reminder.getReminderStatus()]
         
         msg.setValue(value)
         forMsg.setValue(value)
         
         if reminder.reminderStatus == .active{
-            activeReminders.append(reminder)
+            activeReminders[msg.key] = reminder
         }else{
-            upcomingReminders.append(reminder)
+            upcomingReminders[msg.key] = reminder
         }
         
         print(activeReminders)
