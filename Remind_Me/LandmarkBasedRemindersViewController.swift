@@ -88,16 +88,16 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
         
-        reminder.fireBaseIndex = msg.key
+        reminder.fireBaseByIndex = msg.key
         
-        let value = ["byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "locationName": reminder.locationName!, "latitude": reminder.latitude!.description, "longitude": reminder.longitude!.description, "eventType": reminder.getEventType(), "reminderStatus": reminder.getReminderStatus()]
+        let value = ["byUser": reminder.byUser, "fireBaseByIndex": reminder.fireBaseByIndex!, "date": reminder.date.description, "description": reminder.description, "locationName": reminder.locationName!, "latitude": reminder.latitude!.description, "longitude": reminder.longitude!.description, "eventType": reminder.getEventType(), "reminderStatus": reminder.getReminderStatus()]
         
         msg.setValue(value)
         
         if reminder.reminderStatus == .active{
-            activeReminders.append(reminder)
+            activeReminders[msg.key] = reminder
         }else{
-            upcomingReminders.append(reminder)
+            upcomingReminders[msg.key] = reminder
         }
         
         print(activeReminders)

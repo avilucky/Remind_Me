@@ -79,8 +79,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // end table View data source methods
     
     func updateActiveReminders(){
-        reminders = activeReminders
-        reminders.append(contentsOf: activeForReminders)
+        reminders = Array(activeReminders.values)
+        reminders.append(contentsOf: Array(activeForReminders.values))
         homeViewTable.reloadData()
     }
     
