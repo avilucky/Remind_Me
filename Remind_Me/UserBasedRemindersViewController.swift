@@ -76,7 +76,7 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
                     // it exists, do something
                     print(true)
                     print(usernameArr[i])
-                    self.countries.append(usernameArr[i])
+                    self.countries.append(usernameArr[i].lowercased())
 
                     
                 } else {
