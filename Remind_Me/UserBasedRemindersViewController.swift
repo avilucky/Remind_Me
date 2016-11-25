@@ -20,6 +20,9 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     var firebaseContacts: [Any] = []
     var isFirstLoad: Bool = true
     
+    var registerSuccess:Bool = true
+    var errorMessage:String?
+    
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
     var placeholderLabel : UILabel!
@@ -34,7 +37,16 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         ref = FIRDatabase.database().reference()
         
         super.viewDidLoad()
-
+        
+        // register keyboard notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
+        // disable the past date in date picker
+        self.date.minimumDate = Date()
+        
+        // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
         placeholderLabel.text = "Notification description"
@@ -161,6 +173,16 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     @IBAction func saveReminder() {
         // TODO validation needs to be applied
         // and accordingly should override shouldPerformSegue
+        validateUserBasedReminderEntry()
+        
+        if !registerSuccess {
+            let alertController = UIAlertController(title: "User based reminder validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
         
         let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!, latitude: 0.0, longitude: 0.0)
         
@@ -181,10 +203,49 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             upcomingReminders[msg.key] = reminder
         }
         
-        print(activeReminders)
-        print(upcomingReminders)
+        //print(activeReminders)
+        //print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromUser", sender: nil)
+    }
+    
+    func validateUserBasedReminderEntry() {
+        let description: String = notificationDesc.text!
+        let usernameText: String = username.text!
+        errorMessage = nil
+        
+        if usernameText == "" || description == ""{
+            errorMessage = "Tagged user or notification description can not be empty"
+        }
+        
+        // we can also add validation of username is associated with contact that is no such
+        // user exists
+        
+        if errorMessage != nil{
+            registerSuccess = false
+        }else{
+            registerSuccess = true
+        }
+    }
+    
+    // keyboard notifications functions
+    func keyboardWillShow(notification: NSNotification) {
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        if (keyboardSize != nil) {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= 165
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        if (keyboardSize != nil) {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += 165
+            }
+        }
     }
     
 //    func autoCompleteTextField() -> UITextField{
