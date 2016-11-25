@@ -12,3 +12,4 @@ target 'Remind_Me' do
 end
 pod 'Firebase/Core'
 pod 'Firebase/Database'
+pod 'IQKeyboardManagerSwift'

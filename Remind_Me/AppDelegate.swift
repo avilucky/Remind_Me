@@ -11,6 +11,7 @@ import Firebase
 import CoreData
 import GoogleMaps
 import GooglePlaces
+import IQKeyboardManagerSwift
 
 var activeReminders: [String: Reminder] = [String: Reminder]()
 var activeForReminders: [String: Reminder] = [String: Reminder]()
@@ -39,6 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // enable IQKeyboardManager
+        IQKeyboardManager.sharedManager().enable = true
         
         // start updating locations
         locationManager.startUpdatingLocation()
@@ -267,6 +271,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
 
+    
+    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
@@ -311,7 +317,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
 // MARK: - CLLocationManagerDelegate
