@@ -1,3 +1,11 @@
+//
+//  SearchResultsController.swift
+//  Remind_Me
+//
+//  Created by Ajinkya Kulkarni on 10/29/16.
+//  Copyright © 2016 Ajinkya Kulkarni. All rights reserved.
+//
+
 
 import UIKit
 

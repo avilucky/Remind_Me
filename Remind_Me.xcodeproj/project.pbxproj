@@ -10,6 +10,15 @@
 		104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */; };
 		CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073041DDA5A9E00900B79 /* MapsViewController.swift */; };
 		CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */; };
+		CCC2A3381DE6849800705BAA /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */; };
+		CCC2A3391DE6849800705BAA /* Autocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3301DE6849800705BAA /* Autocomplete.swift */; };
+		CCC2A33A1DE6849800705BAA /* AutoCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3311DE6849800705BAA /* AutoCompleteCell.swift */; };
+		CCC2A33B1DE6849800705BAA /* AutocompleteCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3321DE6849800705BAA /* AutocompleteCellData.swift */; };
+		CCC2A33C1DE6849800705BAA /* AutocompleteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3331DE6849800705BAA /* AutocompleteDelegate.swift */; };
+		CCC2A33D1DE6849800705BAA /* AutoCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3341DE6849800705BAA /* AutoCompleteViewController.swift */; };
+		CCC2A33E1DE6849800705BAA /* DefaultAutoCompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC2A3351DE6849800705BAA /* DefaultAutoCompleteCell.xib */; };
+		CCC2A33F1DE6849800705BAA /* TableViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */; };
+		CCC2A3401DE6849800705BAA /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */; };
 		CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */; };
 		CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881331DBE6FCB00AA37D8 /* ViewController.swift */; };
 		CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA881351DBE6FCB00AA37D8 /* Main.storyboard */; };
@@ -30,6 +39,15 @@
 		3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
 		CC5073041DDA5A9E00900B79 /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
+		CCC2A3301DE6849800705BAA /* Autocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autocomplete.swift; sourceTree = "<group>"; };
+		CCC2A3311DE6849800705BAA /* AutoCompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCell.swift; sourceTree = "<group>"; };
+		CCC2A3321DE6849800705BAA /* AutocompleteCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteCellData.swift; sourceTree = "<group>"; };
+		CCC2A3331DE6849800705BAA /* AutocompleteDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDelegate.swift; sourceTree = "<group>"; };
+		CCC2A3341DE6849800705BAA /* AutoCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteViewController.swift; sourceTree = "<group>"; };
+		CCC2A3351DE6849800705BAA /* DefaultAutoCompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultAutoCompleteCell.xib; sourceTree = "<group>"; };
+		CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDatasource.swift; sourceTree = "<group>"; };
+		CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
 		CEA8812E1DBE6FCA00AA37D8 /* Remind_Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remind_Me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEA881331DBE6FCB00AA37D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +116,15 @@
 		CEA881301DBE6FCA00AA37D8 /* Remind_Me */ = {
 			isa = PBXGroup;
 			children = (
+				CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */,
+				CCC2A3301DE6849800705BAA /* Autocomplete.swift */,
+				CCC2A3311DE6849800705BAA /* AutoCompleteCell.swift */,
+				CCC2A3321DE6849800705BAA /* AutocompleteCellData.swift */,
+				CCC2A3331DE6849800705BAA /* AutocompleteDelegate.swift */,
+				CCC2A3341DE6849800705BAA /* AutoCompleteViewController.swift */,
+				CCC2A3351DE6849800705BAA /* DefaultAutoCompleteCell.xib */,
+				CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */,
+				CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */,
 				CC5073041DDA5A9E00900B79 /* MapsViewController.swift */,
 				CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */,
 				CEC594381DC52DB90061A6DA /* Remind_Me.entitlements */,
@@ -147,12 +174,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Avinash Talreja";
 				TargetAttributes = {
 					CEA8812D1DBE6FCA00AA37D8 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 625732G463;
+						DevelopmentTeam = G97JR464C6;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -194,6 +221,8 @@
 				CEA8813F1DBE6FCB00AA37D8 /* LaunchScreen.storyboard in Resources */,
 				CEE89C861DC50DBB000DD80B /* GoogleService-Info.plist in Resources */,
 				CEA8813C1DBE6FCB00AA37D8 /* Assets.xcassets in Resources */,
+				CCC2A33E1DE6849800705BAA /* DefaultAutoCompleteCell.xib in Resources */,
+				CCC2A3381DE6849800705BAA /* Autocomplete.storyboard in Resources */,
 				CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,13 +284,20 @@
 			files = (
 				CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */,
 				CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */,
+				CCC2A33F1DE6849800705BAA /* TableViewDatasource.swift in Sources */,
 				CEDC2D1E1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift in Sources */,
+				CCC2A33A1DE6849800705BAA /* AutoCompleteCell.swift in Sources */,
 				CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */,
+				CCC2A33B1DE6849800705BAA /* AutocompleteCellData.swift in Sources */,
+				CCC2A33C1DE6849800705BAA /* AutocompleteDelegate.swift in Sources */,
 				CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */,
+				CCC2A3391DE6849800705BAA /* Autocomplete.swift in Sources */,
+				CCC2A33D1DE6849800705BAA /* AutoCompleteViewController.swift in Sources */,
 				CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
 				CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */,
 				CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */,
+				CCC2A3401DE6849800705BAA /* TableViewDelegate.swift in Sources */,
 				CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +342,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -355,6 +392,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -383,9 +421,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2B334C8EE58D828184840E2B /* Pods-Remind_Me.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
-				DEVELOPMENT_TEAM = 625732G463;
+				DEVELOPMENT_TEAM = G97JR464C6;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.team7.rm;
@@ -399,9 +438,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Remind_Me/Remind_Me.entitlements;
-				DEVELOPMENT_TEAM = 625732G463;
+				DEVELOPMENT_TEAM = G97JR464C6;
 				INFOPLIST_FILE = Remind_Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.team7.rm;

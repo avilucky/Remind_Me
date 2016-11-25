@@ -1,10 +1,11 @@
 //
-//  ViewController.swift
-//  Places Lookup
+//  MapsViewController.swift
+//  Remind_Me
 //
-//  Created by Malek T. on 9/28/15.
-//  Copyright © 2015 Medigarage Studios LTD. All rights reserved.
+//  Created by Ajinkya Kulkarni on 10/29/16.
+//  Copyright © 2016 Ajinkya Kulkarni. All rights reserved.
 //
+
 
 import UIKit
 import GoogleMaps
