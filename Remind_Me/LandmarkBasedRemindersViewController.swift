@@ -24,14 +24,23 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
     
     var lat: Double = 0
     var lon: Double = 0
+    var registerSuccess:Bool = true
+    var errorMessage:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = FIRDatabase.database().reference()
         
+        // register keyboard notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+      
         eventTypePicker.dataSource = self
         eventTypePicker.delegate = self
-        
+        // disable the past date in date picker
+        self.date.minimumDate = Date()
+            
+        // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
         placeholderLabel.text = "Notification description"
@@ -81,7 +90,16 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
     @IBAction func saveReminder() {
         // TODO validation needs to be applied, change hardcoded values locationName, latitude and longitude
         // and accordingly should override shouldPerformSegue
-        
+        validateLandmarkBasedReminderEntry()
+            
+        if !registerSuccess {
+            let alertController = UIAlertController(title: "Landmark based reminder validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
         let eveType: EventType = EventType.getEventTypeEnum(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
         
         let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: locationAddress.text!, latitude: lat, longitude: lon, eventType: eveType)
@@ -100,11 +118,30 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
             upcomingReminders[msg.key] = reminder
         }
         
-        print(activeReminders)
-        print(upcomingReminders)
+//        print(activeReminders)
+//        print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromLandMark", sender: nil)
         
+    }
+    
+    func validateLandmarkBasedReminderEntry() {
+        let description: String = notificationDesc.text!
+        let locationName: String = locationAddress.text!
+        errorMessage = nil
+        
+        if locationName == "" || description == ""{
+            errorMessage = "Location or notification description can not be empty"
+        }
+        
+        // we can also add validation of username is associated with contact that is no such
+        // user exists
+        
+        if errorMessage != nil{
+            registerSuccess = false
+        }else{
+            registerSuccess = true
+        }
     }
 
     @IBAction func unwindToLocation(segue: UIStoryboardSegue) {
@@ -124,5 +161,25 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
             lon = longitude
         }
 
+    }
+    
+    // keyboard notifications functions
+    func keyboardWillShow(notification: NSNotification) {
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        if (keyboardSize != nil) {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= 165
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        if (keyboardSize != nil) {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += 165
+            }
+        }
     }
 }

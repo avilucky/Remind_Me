@@ -13,6 +13,7 @@ import GoogleMaps
 import GooglePlaces
 import UserNotifications
 import CoreLocation
+import IQKeyboardManagerSwift
 
 var activeReminders: [String: Reminder] = [String: Reminder]()
 var activeForReminders: [String: Reminder] = [String: Reminder]()
@@ -44,7 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // enable IQKeyboardManager
+        IQKeyboardManager.sharedManager().enable = true
         
+            
         // start updating locations
         locationManager.startUpdatingLocation()
         
@@ -355,7 +359,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let request = UNNotificationRequest(identifier: "textNotification", content: content, trigger: trigger)
-        request.setValue(reminder.fireBaseByIndex, forUndefinedKey: "uniqueId")
         
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -387,8 +390,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         if response.actionIdentifier == "remindLater" {
-            let reminderByIndex = response.value(forUndefinedKey: "uniqueId")
-            print("Reminder index \(reminderByIndex)")
             let newDate = Date(timeInterval: 65, since: Date())
             print("New Date \(newDate)")
             //scheduleNotification(at: newDate)

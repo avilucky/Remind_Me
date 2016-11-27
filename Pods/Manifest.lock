@@ -33,6 +33,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/NSData+zlib (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
+  - IQKeyboardManagerSwift (4.0.7)
 
 DEPENDENCIES:
   - Firebase/Core
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
+  - IQKeyboardManagerSwift
 
 SPEC CHECKSUMS:
   Firebase: ff77ffb77b317c3720fef57a60e9335cebf962e6
@@ -53,7 +55,8 @@ SPEC CHECKSUMS:
   GooglePlaces: 35636d86e5020cba3856eb988c09a5491de0a65a
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  IQKeyboardManagerSwift: 58bbcf46b5cf9fd4ed625d28a60cb2fbae4ab0f4
 
-PODFILE CHECKSUM: a7b4f894a44993141fd66dc2d9e8bb29734759ad
+PODFILE CHECKSUM: c756176cdec9064561c22096c0814f491db041b6
 
 COCOAPODS: 1.1.1
