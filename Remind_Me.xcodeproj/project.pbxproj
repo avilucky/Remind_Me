@@ -10,6 +10,7 @@
 		104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */; };
 		CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073041DDA5A9E00900B79 /* MapsViewController.swift */; };
 		CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */; };
+		CCB4EB9A1DEA1F54005174A7 /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */; };
 		CCC2A3381DE6849800705BAA /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */; };
 		CCC2A3391DE6849800705BAA /* Autocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3301DE6849800705BAA /* Autocomplete.swift */; };
 		CCC2A33A1DE6849800705BAA /* AutoCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3311DE6849800705BAA /* AutoCompleteCell.swift */; };
@@ -39,6 +40,7 @@
 		3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
 		CC5073041DDA5A9E00900B79 /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		CCC2A3301DE6849800705BAA /* Autocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autocomplete.swift; sourceTree = "<group>"; };
 		CCC2A3311DE6849800705BAA /* AutoCompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCell.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */,
 				CEA881331DBE6FCB00AA37D8 /* ViewController.swift */,
 				CEA881351DBE6FCB00AA37D8 /* Main.storyboard */,
+				CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */,
 				CEA8813B1DBE6FCB00AA37D8 /* Assets.xcassets */,
 				CEA8813D1DBE6FCB00AA37D8 /* LaunchScreen.storyboard */,
 				CEA881401DBE6FCB00AA37D8 /* Info.plist */,
@@ -293,6 +296,7 @@
 				CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */,
 				CCC2A3391DE6849800705BAA /* Autocomplete.swift in Sources */,
 				CCC2A33D1DE6849800705BAA /* AutoCompleteViewController.swift in Sources */,
+				CCB4EB9A1DEA1F54005174A7 /* UpdateViewController.swift in Sources */,
 				CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
 				CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */,
