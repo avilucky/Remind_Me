@@ -11,7 +11,8 @@ import UIKit
 class UpdateViewController: UIViewController {
 
 
-    @IBAction func updateButtonPressed(_ sender: Any) {
+    
+    @IBAction func updateButtonPressed() {
         let selectedDate = Date()
         print("Selected date: \(selectedDate)")
         let delegate = UIApplication.shared.delegate as? AppDelegate
@@ -23,6 +24,9 @@ class UpdateViewController: UIViewController {
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     }
+    
+    
+    
     
     
     override func viewDidLoad() {
