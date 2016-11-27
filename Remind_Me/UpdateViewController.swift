@@ -10,8 +10,6 @@ import UIKit
 
 class UpdateViewController: UIViewController {
 
-
-    
     @IBAction func updateButtonPressed() {
         let selectedDate = Date()
         print("Selected date: \(selectedDate)")
@@ -24,10 +22,6 @@ class UpdateViewController: UIViewController {
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     }
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
