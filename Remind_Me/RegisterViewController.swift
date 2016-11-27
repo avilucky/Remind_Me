@@ -26,7 +26,6 @@ class RegisterViewController: UIViewController {
         // register keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
         // Do any additional setup after loading the view.
     }
 
@@ -92,13 +91,13 @@ class RegisterViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
     // keyboard notifications functions
     func keyboardWillShow(notification: NSNotification) {
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         if (keyboardSize != nil) {
             if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize!.height
+                self.view.frame.origin.y -= 165
             }
         }
         
@@ -108,8 +107,9 @@ class RegisterViewController: UIViewController {
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         if (keyboardSize != nil) {
             if self.view.frame.origin.y != 0{
-                self.view.frame.origin.y += keyboardSize!.height
+                self.view.frame.origin.y += 165
             }
         }
     }
+
 }

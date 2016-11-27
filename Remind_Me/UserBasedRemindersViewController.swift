@@ -20,9 +20,6 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     var firebaseContacts: [Any] = []
     var isFirstLoad: Bool = true
     
-    var registerSuccess:Bool = true
-    var errorMessage:String?
-    
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
     var placeholderLabel : UILabel!
@@ -31,22 +28,23 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var tagUsers: UITextField!
     
-    
+    var registerSuccess:Bool = true
+    var errorMessage:String?
     
     override func viewDidLoad() {
         ref = FIRDatabase.database().reference()
         
         super.viewDidLoad()
-        
+
         // register keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
         
         // disable the past date in date picker
         self.date.minimumDate = Date()
         
         // place a placeholder on notification description
+        
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
         placeholderLabel.text = "Notification description"
@@ -203,8 +201,8 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             upcomingReminders[msg.key] = reminder
         }
         
-        //print(activeReminders)
-        //print(upcomingReminders)
+        print(activeReminders)
+        print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromUser", sender: nil)
     }
@@ -247,7 +245,6 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
-    
 //    func autoCompleteTextField() -> UITextField{
 //    return tagUsers
 //    }

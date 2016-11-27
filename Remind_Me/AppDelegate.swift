@@ -11,6 +11,8 @@ import Firebase
 import CoreData
 import GoogleMaps
 import GooglePlaces
+import UserNotifications
+import CoreLocation
 import IQKeyboardManagerSwift
 
 var activeReminders: [String: Reminder] = [String: Reminder]()
@@ -24,6 +26,9 @@ var appInBackground: Bool = false
 
 let defaults = UserDefaults.standard
 var currentUser: String? = defaults.object(forKey: "username") as? String
+
+var myLat: Double = 0.0
+var myLon: Double = 0.0
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,10 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         // enable IQKeyboardManager
         IQKeyboardManager.sharedManager().enable = true
         
+            
         // start updating locations
         locationManager.startUpdatingLocation()
         
@@ -54,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // enable key sharing from project settings if this doesn't print anything
         ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value)
+            print(snapshot.value!)
         })
         
         // we check for any username associated with the phone
@@ -88,6 +93,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyDQxXl3_hh1L2fbM6bnfQrqaaJMxMaX6rM")
         GMSPlacesClient.provideAPIKey("AIzaSyDQxXl3_hh1L2fbM6bnfQrqaaJMxMaX6rM")
 
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) {(accepted, error) in
+            if !accepted {
+                print("Notification access denied.")
+            }
+        }
+        
+        let action = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        let category = UNNotificationCategory(identifier: "myCategory", actions: [action], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+
+        
+        
         return true
     }
 
@@ -271,8 +289,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
 
-    
-    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
@@ -317,6 +333,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    func scheduleNotification(at date: Date, reminder: Reminder) {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents(in: .current, from: date)
+        let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute, second: components.second!+10)
+        print("Ajinkya")
+        print(newComponents)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "RemindMe"
+        content.body = reminder.description
+        content.sound = UNNotificationSound.default()
+        content.categoryIdentifier = "myCategory"
+        
+        if let path = Bundle.main.path(forResource: "logo", ofType: "png") {
+            let url = URL(fileURLWithPath: path)
+            
+            do {
+                let attachment = try UNNotificationAttachment(identifier: "logo", url: url, options: nil)
+                content.attachments = [attachment]
+            } catch {
+                print("The attachment was not loaded.")
+            }
+        }
+        
+        let request = UNNotificationRequest(identifier: "textNotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().add(request) {(error) in
+            if let error = error {
+                print("Uh oh! We had an error: \(error)")
+            }
+        }
+    }
+    
+    func nearBy(lat:Double, lon:Double, reminder:Reminder)
+    {
+        if(lat != 0.0 && reminder.latitude != nil && reminder.latitude! != 0.0){
+            let cordinate0 = CLLocation(latitude: lat,longitude: lon)
+            let cordinate1 = CLLocation(latitude: reminder.latitude!, longitude: reminder.longitude!)
+            
+            let distanceInMeters: CLLocationDistance = cordinate0.distance(from: cordinate1)
+            print(distanceInMeters)
+            
+            //if distanceInMeters <= 200{
+                //reminder.notified = true
+                scheduleNotification(at: Date(), reminder: reminder)
+            //}
+        }
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if response.actionIdentifier == "remindLater" {
+            let newDate = Date(timeInterval: 65, since: Date())
+            print("New Date \(newDate)")
+            //scheduleNotification(at: newDate)
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -334,13 +412,25 @@ extension AppDelegate: CLLocationManagerDelegate {
         print("Latitude \(latitude)")
         print("Longitude \(longitude)")
         
+        myLat = Double(latitude)!
+        myLon = Double(longitude)!
+        
         // update location at all active for reminders who require this user's location
         for reminder in Array(activeForReminders.values){
             ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).child("latitude").setValue(latitude)
             ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).child("longitude").setValue(longitude)
         }
         
-        // TODO logic to check all active reminders and notify user
+        // logic to check all active reminders and notify user
+        for reminder in Array(activeReminders.values){
+            if(!reminder.notified){
+                // check if reminder uses nearby
+                if(reminder.forUser != nil || reminder.eventType == .nearby){
+                    nearBy(lat: myLat, lon: myLon, reminder: reminder)
+                }
+            }
+        }
+        
     }
     
 }

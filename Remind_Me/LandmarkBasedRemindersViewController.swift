@@ -24,7 +24,6 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
     
     var lat: Double = 0
     var lon: Double = 0
-    
     var registerSuccess:Bool = true
     var errorMessage:String?
     
@@ -35,13 +34,12 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         // register keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
+      
         eventTypePicker.dataSource = self
         eventTypePicker.delegate = self
-        
         // disable the past date in date picker
         self.date.minimumDate = Date()
-        
+            
         // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
@@ -93,7 +91,7 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         // TODO validation needs to be applied, change hardcoded values locationName, latitude and longitude
         // and accordingly should override shouldPerformSegue
         validateLandmarkBasedReminderEntry()
-        
+            
         if !registerSuccess {
             let alertController = UIAlertController(title: "Landmark based reminder validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
             
@@ -102,7 +100,6 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
             self.present(alertController, animated: true, completion: nil)
             return
         }
-        
         let eveType: EventType = EventType.getEventTypeEnum(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
         
         let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: locationAddress.text!, latitude: lat, longitude: lon, eventType: eveType)
@@ -121,8 +118,8 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
             upcomingReminders[msg.key] = reminder
         }
         
-        //print(activeReminders)
-        //print(upcomingReminders)
+//        print(activeReminders)
+//        print(upcomingReminders)
         
         self.performSegue(withIdentifier: "unwindToHomeFromLandMark", sender: nil)
         

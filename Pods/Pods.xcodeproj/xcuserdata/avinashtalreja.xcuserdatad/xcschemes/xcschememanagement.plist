@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>IQKeyboardManagerSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Remind_Me.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +22,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4DC059E04CBA98AEDDB5C34E02D551E9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B2CDAC9FF4284F579089DDF6873BE235</key>
+		<key>7FF77A77B8F3D120CBFBEA2F581B7B11</key>
 		<dict>
 			<key>primary</key>
 			<true/>
