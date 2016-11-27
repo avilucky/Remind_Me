@@ -20,6 +20,7 @@
 		CCC2A33E1DE6849800705BAA /* DefaultAutoCompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC2A3351DE6849800705BAA /* DefaultAutoCompleteCell.xib */; };
 		CCC2A33F1DE6849800705BAA /* TableViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */; };
 		CCC2A3401DE6849800705BAA /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */; };
+		CCC6AA571DEB66DB004D5978 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC6AA561DEB66DB004D5978 /* ContactsViewController.swift */; };
 		CEA881321DBE6FCB00AA37D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */; };
 		CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA881331DBE6FCB00AA37D8 /* ViewController.swift */; };
 		CEA881371DBE6FCB00AA37D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA881351DBE6FCB00AA37D8 /* Main.storyboard */; };
@@ -50,6 +51,7 @@
 		CCC2A3351DE6849800705BAA /* DefaultAutoCompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultAutoCompleteCell.xib; sourceTree = "<group>"; };
 		CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDatasource.swift; sourceTree = "<group>"; };
 		CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
+		CCC6AA561DEB66DB004D5978 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		CEA8812E1DBE6FCA00AA37D8 /* Remind_Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remind_Me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEA881331DBE6FCB00AA37D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				CEA881311DBE6FCB00AA37D8 /* AppDelegate.swift */,
 				CEA881331DBE6FCB00AA37D8 /* ViewController.swift */,
 				CEA881351DBE6FCB00AA37D8 /* Main.storyboard */,
+				CCC6AA561DEB66DB004D5978 /* ContactsViewController.swift */,
 				CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */,
 				CEA8813B1DBE6FCB00AA37D8 /* Assets.xcassets */,
 				CEA8813D1DBE6FCB00AA37D8 /* LaunchScreen.storyboard */,
@@ -288,6 +291,7 @@
 				CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */,
 				CEC594371DC521DD0061A6DA /* HomeViewController.swift in Sources */,
 				CCC2A33F1DE6849800705BAA /* TableViewDatasource.swift in Sources */,
+				CCC6AA571DEB66DB004D5978 /* ContactsViewController.swift in Sources */,
 				CEDC2D1E1DCE5B9A007AF322 /* UserBasedRemindersViewController.swift in Sources */,
 				CCC2A33A1DE6849800705BAA /* AutoCompleteCell.swift in Sources */,
 				CEA881341DBE6FCB00AA37D8 /* ViewController.swift in Sources */,
