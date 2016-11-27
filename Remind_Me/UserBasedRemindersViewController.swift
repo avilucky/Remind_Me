@@ -19,6 +19,7 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     var deviceContacts: [CFNumber] = []
     var firebaseContacts: [Any] = []
     var isFirstLoad: Bool = true
+    var usernameArr:[String] = []
     
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
@@ -68,9 +69,8 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             // Get user value
             let value = snapshot.value as! NSDictionary
             let temp: [Any] = value.allValues
-            var usernameArr:[String] = []
-            usernameArr = value.allKeys as! [String]
-            print(usernameArr)
+            self.usernameArr = value.allKeys as! [String]
+            print(self.usernameArr)
             var i : Int = 0
             for cn in temp
             {
@@ -85,8 +85,8 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
                 if self.deviceContacts.contains(where: {$0 == str}) {
                     // it exists, do something
                     print(true)
-                    print(usernameArr[i])
-                    self.countries.append(usernameArr[i].lowercased())
+                    print(self.usernameArr[i])
+                    self.countries.append(self.usernameArr[i].lowercased())
 
                     
                 } else {
@@ -218,6 +218,13 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         
         // we can also add validation of username is associated with contact that is no such
         // user exists
+        for uname in usernameArr{
+            if(uname != usernameText)
+            {
+                errorMessage = "Tagged user not found"
+            }
+        }
+
         
         if errorMessage != nil{
             registerSuccess = false
@@ -275,7 +282,7 @@ extension UserBasedRemindersViewController: AutocompleteDelegate {
         
         let countriesAndFlags: [AutocompletableOption] = filteredCountries.map { ( country) -> AutocompleteCellData in
             var country = country
-            country.replaceSubrange(country.startIndex...country.startIndex, with: String(country.characters[country.startIndex]).capitalized)
+            country.replaceSubrange(country.startIndex...country.startIndex, with: String(country.characters[country.startIndex]).lowercased())
             return AutocompleteCellData(text: country)
             }.map( { $0 as AutocompletableOption })
         
