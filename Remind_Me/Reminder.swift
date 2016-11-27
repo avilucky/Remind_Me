@@ -64,6 +64,8 @@ class Reminder{
         self.byUser = byUser
         self.date = date
         self.description = description
+        self.latitude = latitude
+        self.longitude = longitude
         self.reminderStatus = .upcoming
         
         if isActive(date){
