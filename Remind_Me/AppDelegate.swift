@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let action = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        let action = UNNotificationAction(identifier: "dismiss", title: "Dismiss", options: [])
         let category = UNNotificationCategory(identifier: "myCategory", actions: [action], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
 
@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let enumerator = snapshot.children
                 while let rest = enumerator.nextObject() as? FIRDataSnapshot{
                     if dismissedReminders[rest.key] == nil && activeReminders[rest.key] == nil && upcomingReminders[rest.key] == nil{
-                        //print("Firebase Index : \(rest.key)")
+                        print("Firebase Index : \(rest.key)")
                         
                         let byUser = rest.childSnapshot(forPath: "byUser").value as! String
                         //print("By User: \(byUser)")
@@ -128,8 +128,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
                         
                         let lat = Double(rest.childSnapshot(forPath: "latitude").value as! String)
-                        
+                        print("Latitude: \(lat)")
                         let lon = Double(rest.childSnapshot(forPath: "longitude").value as! String)
+                        print("Longitude: \(lon)")
                         
                         var reminder:Reminder?
                         
@@ -166,6 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // TODO logic to check if location updated for an active reminder
                         // call notify if required by the reminder
                         print("Location for reminder updated")
+                        self.nearBy(lat: myLat, lon: myLon, reminder: activeReminders[rest.key]!)
                     }
                 }
                 
@@ -216,6 +218,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }else{
                             upcomingForReminders[rest.key] = reminder
                         }
+                    }else if activeForReminders[rest.key] != nil && self.statusUpdated(rest, activeForReminders[rest.key]!){
+                        // update the date and status of a reminder
+                        print("Status for reminder updated")
                     }
                 }
                 
@@ -227,6 +232,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(dismissedForReminders.count)
             }
         })
+    }
+    
+    // check to see if status updated of a for Reminder and update status accordingly
+    func statusUpdated(_ rest: FIRDataSnapshot, _ reminder: Reminder) -> Bool{
+        let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
+        
+        if reminderStatus != reminder.getReminderStatus(){
+            // check if updated to dismissed
+            if reminderStatus == "dismissed"{
+                let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
+                dismissedForReminders[reminder.fireBaseForIndex] = reminder
+                reminder.reminderStatus = .dismissed
+                reminder.date = date
+                activeForReminders.removeValue(forKey: reminder.fireBaseForIndex)
+            }
+            
+            return true
+        }
+        
+        return false
     }
     
     // check to see if location updated for a user reminder at the firebase database
@@ -336,14 +361,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func scheduleNotification(at date: Date, reminder: Reminder) {
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.dateComponents(in: .current, from: date)
-        let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute, second: components.second!+10)
-        print("Ajinkya")
+        let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute, second: components.second!+1)
+        
         print(newComponents)
         let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
         
         let content = UNMutableNotificationContent()
         content.title = "RemindMe"
-        content.body = reminder.description
+        content.body = getTextDescription(reminder)
         content.sound = UNNotificationSound.default()
         content.categoryIdentifier = "myCategory"
         
@@ -358,15 +383,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let request = UNNotificationRequest(identifier: "textNotification", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "remindMe:"+reminder.fireBaseByIndex, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().add(request) {(error) in
             if let error = error {
                 print("Uh oh! We had an error: \(error)")
             }
         }
+    }
+    
+    func getTextDescription(_ reminder: Reminder) -> String{
+        var str = "You "
+        
+        // if reminder is nearby
+        if(reminder.eventType == .nearby){
+            str += "are nearby: "
+        }
+        // TODO if reminder is leaving or reached
+        
+        
+        // if reminder is user based
+        if(reminder.forUser != nil){
+            str += reminder.forUser!
+        }else{
+            // if reminder is landmark based
+            str += reminder.locationName!
+        }
+        
+        str += ". "
+        
+        str += reminder.description
+        
+        return str;
     }
     
     func nearBy(lat:Double, lon:Double, reminder:Reminder)
@@ -376,12 +425,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let cordinate1 = CLLocation(latitude: reminder.latitude!, longitude: reminder.longitude!)
             
             let distanceInMeters: CLLocationDistance = cordinate0.distance(from: cordinate1)
-            print(distanceInMeters)
             
-            //if distanceInMeters <= 200{
-                //reminder.notified = true
+            if reminder.forUser != nil{
+                print("For : \(reminder.forUser!)")
+            }else{
+                print("For : \(reminder.locationName!)")
+            }
+            
+            print("Distance \(distanceInMeters)")
+            
+            if distanceInMeters <= 200{
+                print("Distance less than 200")
+                reminder.notified = true
                 scheduleNotification(at: Date(), reminder: reminder)
-            //}
+            }
         }
     }
 }
@@ -389,10 +446,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        if response.actionIdentifier == "remindLater" {
-            let newDate = Date(timeInterval: 65, since: Date())
-            print("New Date \(newDate)")
-            //scheduleNotification(at: newDate)
+        // dismiss the reminder
+        if response.actionIdentifier == "dismiss" {
+            let dismissedDate = Date()
+            let str = response.notification.request.identifier
+            let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
+            print("FirebaseByIndex from \(str): \(reminderByIndex)")
+            
+            // move this reminder from activeReminders to dismissed reminders
+            dismissedReminders[reminderByIndex] = activeReminders[reminderByIndex]
+            activeReminders.removeValue(forKey: reminderByIndex)
+            
+            let reminder = dismissedReminders[reminderByIndex]
+            reminder!.date = dismissedDate
+            reminder!.reminderStatus = .dismissed
+            
+            if(reminder!.fireBaseForIndex != nil){
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
+            }
+        ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
+            
+            let homeViewController = self.window?.rootViewController as! HomeViewController
+            homeViewController.updateActiveReminders()
+        }
+    }
+    
+    //This is key callback to present notification while the app is in foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        print("Notification being triggered")
+        //You can either present alert ,sound or increase badge while the app is in foreground too with ios 10
+        //to distinguish between notifications
+        if notification.request.identifier.hasPrefix("remindMe:"){
+            
+            completionHandler( [.alert,.sound,.badge])
+            
         }
     }
 }
