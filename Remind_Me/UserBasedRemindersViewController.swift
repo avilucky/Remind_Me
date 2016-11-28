@@ -216,14 +216,14 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             errorMessage = "Tagged user or notification description can not be empty"
         }
         
+        print(usernameArr)
         // we can also add validation of username is associated with contact that is no such
         // user exists
-        for uname in usernameArr{
-            if(uname != usernameText)
-            {
-                errorMessage = "Tagged user not found"
-            }
+        if(!usernameArr.contains(usernameText))
+        {
+            errorMessage = "Tagged user not found"
         }
+        
 
         
         if errorMessage != nil{
