@@ -52,10 +52,11 @@ class RegisterViewController: UIViewController {
             errorMessage = "User name or phone number can not be empty"
         }else if phoneNumber.hasPrefix("0") || phoneNumber.characters.count != 10{
             errorMessage = "Phone number has to be of 10 digits and can not start with a 0"
+        }else if(contactsOnFireBase[username] != nil){
+            errorMessage = "User name already taken"
+        }else if(Array(contactsOnFireBase.values).contains(phoneNumber)){
+            errorMessage = "Phone number already registered"
         }
-        
-        // we can also add validation of unique username
-        // and phone number from firebase data
         
         if errorMessage != nil{
             registerSuccess = false
