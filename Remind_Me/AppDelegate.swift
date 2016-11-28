@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // we check for any username associated with the phone
-        let username:String? = nil
+        let username:String? = currentUser
         
         // for testing purpose comment the above declaration and use the below one
         // let username:String? = "avinash1"
