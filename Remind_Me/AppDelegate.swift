@@ -30,6 +30,8 @@ var currentUser: String? = defaults.object(forKey: "username") as? String
 var myLat: Double = 0.0
 var myLon: Double = 0.0
 
+var contactsOnFireBase: [String:String] = [String:String]()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -63,20 +65,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // we check for any username associated with the phone
-        let username:String? = currentUser
+        let username:String? = nil
         
         // for testing purpose comment the above declaration and use the below one
         // let username:String? = "avinash1"
         
-        print("User: \(username)")
+        ref.child("users").observe(.value, with: { (snapshot) in
+            if snapshot.childrenCount > 0{
+                let enumerator = snapshot.children
+                while let rest = enumerator.nextObject() as? FIRDataSnapshot{
+                    let phoneNumber = rest.childSnapshot(forPath: "phone").value as! String
+                    if contactsOnFireBase[rest.key] != nil || contactsOnFireBase[rest.key] != phoneNumber{
+                        contactsOnFireBase[rest.key] = phoneNumber
+                    }
+                }
+            }
+        })
+        
         
         if username != nil{
-            // if yes that is phone has already registered for the app, then look if the 
+            print("User: \(username)")
+            // if yes that is phone has already registered for the app, then look if the
             // details of the users exist on firebase
             ref.child("users").child(username!).observeSingleEvent(of: .value, with: { (snapshot) in
-                // if user details exist on firebase then set the root controller to the HomeViewController
-                //print("Sanpshot children count: \(snapshot.childrenCount)")
+
                 if snapshot.childrenCount > 0{
+                    
                     self.window = UIWindow(frame: UIScreen.main.bounds)
                     
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
