@@ -448,7 +448,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             print("Distance \(distanceInMeters)")
             
-            if distanceInMeters <= 200{
+            if !reminder.notified && distanceInMeters <= 200{
                 print("Distance less than 200")
                 reminder.notified = true
                 scheduleNotification(at: Date(), reminder: reminder)
