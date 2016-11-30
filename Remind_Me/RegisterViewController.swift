@@ -36,20 +36,29 @@ class RegisterViewController: UIViewController {
     
     
     @IBAction func registerUser() {
-        if registerSuccess{
+        if validateUserEntry(){
             ref.child("users").child(usernameLabel.text!).setValue(["phone": phoneNumberLabel.text!])
             defaults.set(usernameLabel.text!, forKey: "username")
             currentUser = usernameLabel.text!
+            
+            let delegate = UIApplication.shared.delegate as? AppDelegate
+            if delegate != nil{
+                delegate!.changeRootController()
+            }
         }
     }
     
-    func validateUserEntry() {
+    func validateUserEntry() -> Bool{
         let username: String = usernameLabel.text!
         let phoneNumber: String = phoneNumberLabel.text!
         errorMessage = nil
         
-        if username == "" || phoneNumber == ""{
-            errorMessage = "User name or phone number can not be empty"
+        if username == "" && phoneNumber == ""{
+            errorMessage = "User name and phone number can not be empty"
+        }else if username == ""{
+            errorMessage = "User name can not be empty"
+        }else if phoneNumber == ""{
+            errorMessage = "Phone number can not be empty"
         }else if phoneNumber.hasPrefix("0") || phoneNumber.characters.count != 10{
             errorMessage = "Phone number has to be of 10 digits and can not start with a 0"
         }else if(contactsOnFireBase[username] != nil){
@@ -59,27 +68,15 @@ class RegisterViewController: UIViewController {
         }
         
         if errorMessage != nil{
-            registerSuccess = false
-        }else{
-            registerSuccess = true
+            let alertController = UIAlertController(title: "Register validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+            return false
         }
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        // at any time if the segue is removed this validateUser Entry and alert controller should be
-        // moved to button action
-        validateUserEntry()
-        //print("Register success \(registerSuccess)")
-        if identifier == "register"{
-            if !registerSuccess {
-                let alertController = UIAlertController(title: "Register validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
-                
-                alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
-                
-                self.present(alertController, animated: true, completion: nil)
-                return false
-            }
-        }
+        
         return true
     }
 

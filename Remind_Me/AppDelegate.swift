@@ -25,7 +25,7 @@ var upcomingForReminders: [String: Reminder] = [String: Reminder]()
 var appInBackground: Bool = false
 
 let defaults = UserDefaults.standard
-var currentUser: String? = defaults.object(forKey: "username") as? String
+var currentUser: String?
 
 var myLat: Double = 0.0
 var myLon: Double = 0.0
@@ -64,11 +64,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(snapshot.value!)
         })
         
+        // for testing purpose to clear defaults and see registerview controller UI
+        // defaults.removeObject(forKey: "username")
+        
+        currentUser = defaults.object(forKey: "username") as? String
         // we check for any username associated with the phone
         let username:String? = currentUser
         
-        // for testing purpose comment the above declaration and use the below one
-        // let username:String? = "avinash1"
         
         ref.child("users").observe(.value, with: { (snapshot) in
             if snapshot.childrenCount > 0{
@@ -91,14 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 if snapshot.childrenCount > 0{
                     
-                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                    
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
-                    
-                    self.window?.rootViewController = initialViewController
-                    self.window?.makeKeyAndVisible()
+                    self.changeRootController()
                     
                     self.updateRemindersForUser()
                 }
@@ -123,6 +118,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    func changeRootController(){
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+        
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+    }
+    
     func updateRemindersForUser(){
         ref.child("reminders").child(currentUser!).observe(.value, with: { (snapshot) in
             print("Reminders for \(currentUser!): \(snapshot.childrenCount)")
@@ -314,8 +320,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         print("App enters foreground")
         appInBackground = false
-        let homeViewController = self.window?.rootViewController as! HomeViewController
-        homeViewController.updateActiveReminders()
+        if currentUser != nil{
+            let homeViewController = self.window?.rootViewController as! HomeViewController
+            homeViewController.updateActiveReminders()
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
