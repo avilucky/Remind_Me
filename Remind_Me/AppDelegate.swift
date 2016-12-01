@@ -270,6 +270,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 reminder.reminderStatus = .dismissed
                 reminder.date = date
                 activeForReminders.removeValue(forKey: reminder.fireBaseForIndex)
+            }else if reminderStatus == "upcoming"{
+                let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
+                upcomingForReminders[reminder.fireBaseForIndex] = reminder
+                reminder.reminderStatus = .upcoming
+                reminder.date = date
+                activeForReminders.removeValue(forKey: reminder.fireBaseForIndex)
+                Timer.scheduledTimer(timeInterval: reminder.date.timeIntervalSinceNow, target: self, selector: #selector(self.updateReminders), userInfo: reminder, repeats: false)
             }
             
             return true
@@ -534,16 +541,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
             print("FirebaseByIndex from \(str): \(reminderByIndex)")
             
-            let reminder = activeReminders[reminderByIndex]
+            // move this reminder from activeReminders to dismissed reminders
+            upcomingReminders[reminderByIndex] = activeReminders[reminderByIndex]
+            activeReminders.removeValue(forKey: reminderByIndex)
             
+            let reminder = upcomingReminders[reminderByIndex]
             reminder!.date = newDate
             reminder!.notified = false
+            reminder!.reminderStatus = .upcoming
             
             if(reminder!.fireBaseForIndex != nil){
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
                 ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
             }
             
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
+            
+            let homeViewController = self.window?.rootViewController as! HomeViewController
+            homeViewController.updateActiveReminders()
         }
         
         
