@@ -312,18 +312,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("update called")
         let reminder: Reminder = timer.userInfo as! Reminder
         var changed: Bool = false
+        
         if upcomingReminders[reminder.fireBaseByIndex] != nil{
-            if reminder.date >= Date(){
-                activeReminders[reminder.fireBaseByIndex] = reminder
-                upcomingReminders.removeValue(forKey: reminder.fireBaseByIndex)
-                changed = true
-            }
+            activeReminders[reminder.fireBaseByIndex] = reminder
+            upcomingReminders.removeValue(forKey: reminder.fireBaseByIndex)
+            changed = true
         }else if upcomingForReminders[reminder.fireBaseForIndex] != nil{
-            if reminder.date >= Date(){
-                activeForReminders[reminder.fireBaseForIndex] = reminder
-                upcomingForReminders.removeValue(forKey: reminder.fireBaseForIndex)
-                changed = true
-            }
+            activeForReminders[reminder.fireBaseForIndex] = reminder
+            upcomingForReminders.removeValue(forKey: reminder.fireBaseForIndex)
+            changed = true
         }
         
         if changed{
@@ -520,8 +517,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             reminder!.reminderStatus = .dismissed
             
             if(reminder!.fireBaseForIndex != nil){
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
                 ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             }
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
@@ -551,8 +548,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             reminder!.reminderStatus = .upcoming
             
             if(reminder!.fireBaseForIndex != nil){
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
                 ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             }
             
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())

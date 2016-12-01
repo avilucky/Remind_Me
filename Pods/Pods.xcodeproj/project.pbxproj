@@ -69,8 +69,9 @@
 		2740B17980FD7B821F4D42CEB02EF1BA /* Pods-Remind_Me.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Remind_Me.modulemap"; sourceTree = "<group>"; };
 		2F404EB4BB683847E48EAE906A241454 /* Pods_Remind_Me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Remind_Me.framework; path = "Pods-Remind_Me.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30020CBC5A11C208F93C0D4F25346212 /* IQNSArray+Sort.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQNSArray+Sort.swift"; path = "IQKeyboardManagerSwift/Categories/IQNSArray+Sort.swift"; sourceTree = "<group>"; };
-		3402836DD6FB78390C4B80651038537A /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Subspecs/Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
+		34C407521677D5F780C471CFBEB80A95 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		36D9FC1597DAD802292C733F2E0DA0FC /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
+		38631CBD10FB0D19B22541D736272CB9 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		3B16DE4A92B00A0A8B3C7BF18AAE5697 /* GoogleToolboxForMac-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-umbrella.h"; sourceTree = "<group>"; };
 		3C2E3CEF9091B4635AA3232DB1C17D82 /* GooglePlacePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlacePicker.framework; path = Frameworks/GooglePlacePicker.framework; sourceTree = "<group>"; };
 		3C4029528C7DD744C4E231423399467B /* IQPreviousNextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQPreviousNextView.swift; path = IQKeyboardManagerSwift/IQToolbar/IQPreviousNextView.swift; sourceTree = "<group>"; };
@@ -94,7 +95,6 @@
 		695DA86B20FEA7BF7EA40FA7DB65A479 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		6A8C809B7FD93B6D5CF6531E602EAF3B /* IQKeyboardManagerSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.xcconfig; sourceTree = "<group>"; };
 		6E48932613C1A4EB24745FBD8671670B /* IQKeyboardManagerConstantsInternal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstantsInternal.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstantsInternal.swift; sourceTree = "<group>"; };
-		77092216A263F993D29D18E3265CC440 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Subspecs/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		792165F2CA033667D6F57205316D40A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		796EB37A4DFB133DF88D7D0B71EEE94A /* Pods-Remind_Me-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Remind_Me-umbrella.h"; sourceTree = "<group>"; };
 		7CC299D4B0ECAAEA2E30421319C96C4C /* IQKeyboardReturnKeyHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardReturnKeyHandler.swift; path = IQKeyboardManagerSwift/IQKeyboardReturnKeyHandler.swift; sourceTree = "<group>"; };
@@ -105,16 +105,16 @@
 		91433D08492A5FCABCA40466318AB17E /* GTMNSData+zlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GTMNSData+zlib.h"; path = "Foundation/GTMNSData+zlib.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		948EBED2D78456DE280D258B4647A715 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
-		9C1936AE7D57D15AF1FC1F9F74DC4A50 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Subspecs/Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
+		9C0A8C50501DBEE184A678D67E228167 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		A3DEB339F86DA905B6226735BA4C1F76 /* IQKeyboardManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManager.swift; path = IQKeyboardManagerSwift/IQKeyboardManager.swift; sourceTree = "<group>"; };
 		A4736A65071E61919ED821EF7766EAD3 /* IQToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQToolbar.swift; path = IQKeyboardManagerSwift/IQToolbar/IQToolbar.swift; sourceTree = "<group>"; };
 		A78F78778517CBCC69448B6EE0FB6CDB /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		A87E967ACA2F64CCFD5CFD8383B16F61 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
-		AC0BF407598C19A7AA3673DD17DBB102 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Subspecs/Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		B90AE6827ACED919D95E32448CF5EFEF /* GoogleToolboxForMac-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleToolboxForMac-dummy.m"; sourceTree = "<group>"; };
 		CD7FB56B6A1C08F336C95E162C040E43 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4DD227536347A31A28F1EA43F3C4023 /* Pods-Remind_Me-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Remind_Me-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D5B924DDD720B41A17AFE2AA98535AFA /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+IQKeyboardToolbar.swift"; path = "IQKeyboardManagerSwift/IQToolbar/IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
+		D6E203C21343E2F838FB01EA51D667BC /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		D889DCC9D9A4BAA2CCEB31A57A6F4456 /* IQUIViewController+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIViewController+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIViewController+Additions.swift"; sourceTree = "<group>"; };
 		DA2CC96888B885A456276BC1FCA006F6 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
 		E0DE30DE3BCA1C89C622F800370C36EC /* IQUIScrollView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIScrollView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIScrollView+Additions.swift"; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 		16855611968E4A805A6C5E40A215E3C8 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				BCD8ACA5C7508A17346187878C445FDB /* Frameworks */,
+				C48722146F5D665CF08F0AB5CA8F991A /* Frameworks */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -277,8 +277,8 @@
 		5FCB24CD1118D826F990D302FCC4A59C /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				7AB91D9D8A4DC764E73854358FC9D978 /* Frameworks */,
-				EA3354BB8F6844432D6BC25AAA1008B7 /* Resources */,
+				6A427E47DBF5F21E458F85085B44BFD6 /* Frameworks */,
+				7622DB630ACDE60F1CA78E235A6F1134 /* Resources */,
 			);
 			name = Maps;
 			sourceTree = "<group>";
@@ -298,6 +298,15 @@
 				7569C2E3E4ABF20ED941A8697BAB25E7 /* Pods-Remind_Me */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		6A427E47DBF5F21E458F85085B44BFD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6E203C21343E2F838FB01EA51D667BC /* GoogleMaps.framework */,
+				34C407521677D5F780C471CFBEB80A95 /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		74A70CD50715A7DCA787592B3597CCCD /* GoogleSymbolUtilities */ = {
@@ -337,6 +346,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		7622DB630ACDE60F1CA78E235A6F1134 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C0A8C50501DBEE184A678D67E228167 /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		796F4C9E6EF938E596E004A083BE1D73 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,15 +366,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/GoogleToolboxForMac";
-			sourceTree = "<group>";
-		};
-		7AB91D9D8A4DC764E73854358FC9D978 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AC0BF407598C19A7AA3673DD17DBB102 /* GoogleMaps.framework */,
-				3402836DD6FB78390C4B80651038537A /* GoogleMapsCore.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -469,14 +477,6 @@
 			path = GooglePlaces;
 			sourceTree = "<group>";
 		};
-		BCD8ACA5C7508A17346187878C445FDB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C1936AE7D57D15AF1FC1F9F74DC4A50 /* GoogleMapsBase.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		C0ADA5FC9336BE9CAE235D2CABCB8A28 /* GooglePlacePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,6 +485,14 @@
 			);
 			name = GooglePlacePicker;
 			path = GooglePlacePicker;
+			sourceTree = "<group>";
+		};
+		C48722146F5D665CF08F0AB5CA8F991A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				38631CBD10FB0D19B22541D736272CB9 /* GoogleMapsBase.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C7726EE8F5BCFA6204D551E27D03DFA8 /* Frameworks */ = {
@@ -518,14 +526,6 @@
 				948EBED2D78456DE280D258B4647A715 /* FirebaseAnalytics.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EA3354BB8F6844432D6BC25AAA1008B7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				77092216A263F993D29D18E3265CC440 /* GoogleMaps.bundle */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		EC80B416B764B03F0108ACE8D4764C3B /* Frameworks */ = {

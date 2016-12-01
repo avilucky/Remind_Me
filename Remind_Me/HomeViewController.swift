@@ -14,6 +14,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var homeViewTable: UITableView!
     var reminders: [Reminder] = []
+    var indexNum:Int = 0
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +25,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         homeViewTable.dataSource = self
         homeViewTable.delegate = self
+        
+        defaults.set(0, forKey: "index")
         
         updateActiveReminders()
         // Do any additional setup after loading the view.
@@ -88,19 +93,46 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             updateActiveReminders()
     }
     
-    @IBAction func showContacts(sender: AnyObject) {
-        let contactPickerViewController = CNContactPickerViewController()
-        
-        contactPickerViewController.predicateForEnablingContact = NSPredicate(format: "firstname != nil")
-        
-        contactPickerViewController.delegate = self
-        
-        present(contactPickerViewController, animated: true, completion: nil)
-    }
     
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        /*  if (segue.destinationViewController is PlayerDetailController) {
+         let child:PlayerDetailController = segue.destinationViewController as! PlayerDetailController
+         //let selectedRow = self.tableViewOutlet.indexPathForSelectedRow
+         //let defaults = NSUserDefaults.standardUserDefaults()
+         //let arrayOfPlayer = defaults.stringArrayForKey("PlayerName")
+         child.playerName = text
+         print("prepare for seque called")
+         }*/
+        
+        if (segue.identifier == "showDetail") {
+            
+            // initialize new view controller and cast it as your view controller
+            let child:ReminderDetailViewController = segue.destination as! ReminderDetailViewController
+            // your new view controller should have property that will store passed value
+            //child.playersName = name
+        }
+        
+    }
     
     
+    // two optional UITableViewDelegate functions
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        defaults.set(indexPath[1], forKey: "index")
+        
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath)
+//        name = cell!.textLabel!.text!
+        performSegue(withIdentifier: "showDetail", sender: self)
+        
+    }
+
     
     /*
     // MARK: - Navigation
