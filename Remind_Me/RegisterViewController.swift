@@ -44,6 +44,7 @@ class RegisterViewController: UIViewController {
             let delegate = UIApplication.shared.delegate as? AppDelegate
             if delegate != nil{
                 delegate!.changeRootController()
+                delegate!.updateRemindersForUser()
             }
         }
     }
