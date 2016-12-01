@@ -25,6 +25,7 @@ var upcomingForReminders: [String: Reminder] = [String: Reminder]()
 var appInBackground: Bool = false
 
 let defaults = UserDefaults.standard
+
 var currentUser: String? = defaults.object(forKey: "username") as? String
 
 var myLat: Double = 0.0
@@ -81,7 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         })
-        
+        defaults.set(0, forKey: "index")
+
         
         if username != nil{
             print("User: \(username)")
