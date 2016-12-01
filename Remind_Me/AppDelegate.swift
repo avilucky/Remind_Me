@@ -109,8 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let action = UNNotificationAction(identifier: "dismiss", title: "Dismiss", options: [])
-        let category = UNNotificationCategory(identifier: "myCategory", actions: [action], intentIdentifiers: [], options: [])
+        let actionDismiss1Hour = UNNotificationAction(identifier: "dismiss1hr", title: "Dismiss for an hour", options: [])
+        let actionDismiss1Day = UNNotificationAction(identifier: "dismiss1day", title: "Dismiss for a day", options: [])
+        let actionDismissEver = UNNotificationAction(identifier: "dismissforever", title: "Dismiss forever", options: [])
+        let category = UNNotificationCategory(identifier: "myCategory", actions: [actionDismiss1Hour, actionDismiss1Day, actionDismissEver], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
 
         
@@ -182,6 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             activeReminders[rest.key] = reminder
                         }else{
                             upcomingReminders[rest.key] = reminder
+                            Timer.scheduledTimer(timeInterval: reminder!.date.timeIntervalSinceNow, target: self, selector: #selector(self.updateReminders), userInfo: reminder!, repeats: false)
                         }
                     }else if activeReminders[rest.key] != nil && activeReminders[rest.key]?.forUser != nil && self.locationUpdated(rest, activeReminders[rest.key]!){
                         // TODO logic to check if location updated for an active reminder
@@ -237,6 +240,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             activeForReminders[rest.key] = reminder
                         }else{
                             upcomingForReminders[rest.key] = reminder
+                            Timer.scheduledTimer(timeInterval: reminder.date.timeIntervalSinceNow, target: self, selector: #selector(self.updateReminders), userInfo: reminder, repeats: false)
                         }
                     }else if activeForReminders[rest.key] != nil && self.statusUpdated(rest, activeForReminders[rest.key]!){
                         // update the date and status of a reminder
@@ -294,6 +298,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Updated")
         
         return true
+    }
+    
+    //function to change status of upcoming reminders to active reminders
+    func updateReminders(timer: Timer){
+        print("update called")
+        let reminder: Reminder = timer.userInfo as! Reminder
+        var changed: Bool = false
+        if upcomingReminders[reminder.fireBaseByIndex] != nil{
+            if reminder.date >= Date(){
+                activeReminders[reminder.fireBaseByIndex] = reminder
+                upcomingReminders.removeValue(forKey: reminder.fireBaseByIndex)
+                changed = true
+            }
+        }else if upcomingForReminders[reminder.fireBaseForIndex] != nil{
+            if reminder.date >= Date(){
+                activeForReminders[reminder.fireBaseForIndex] = reminder
+                upcomingForReminders.removeValue(forKey: reminder.fireBaseForIndex)
+                changed = true
+            }
+        }
+        
+        if changed{
+            let homeViewController = self.window?.rootViewController as! HomeViewController
+            homeViewController.updateActiveReminders()
+        }
     }
     
     func getDateFromString(_ dateString: String) -> Date{
@@ -456,7 +485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             print("Distance \(distanceInMeters)")
             
-            if !reminder.notified && distanceInMeters <= 200{
+            if !reminder.notified && reminder.date <= Date() && distanceInMeters <= 200{
                 print("Distance less than 200")
                 reminder.notified = true
                 scheduleNotification(at: Date(), reminder: reminder)
@@ -469,7 +498,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         // dismiss the reminder
-        if response.actionIdentifier == "dismiss" {
+        if response.actionIdentifier == "dismissforever" {
             let dismissedDate = Date()
             let str = response.notification.request.identifier
             let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
@@ -487,12 +516,37 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
                 ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
             }
-        ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
             
             let homeViewController = self.window?.rootViewController as! HomeViewController
             homeViewController.updateActiveReminders()
+        }else if response.actionIdentifier.hasPrefix("dismiss"){
+            var newDate = Date()
+            
+            if response.actionIdentifier == "dismiss1hr"{
+                newDate.addTimeInterval(3600)
+            }else if response.actionIdentifier == "dismiss1day"{
+                newDate.addTimeInterval(86400)
+            }
+            
+            let str = response.notification.request.identifier
+            let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
+            print("FirebaseByIndex from \(str): \(reminderByIndex)")
+            
+            let reminder = activeReminders[reminderByIndex]
+            
+            reminder!.date = newDate
+            reminder!.notified = false
+            
+            if(reminder!.fireBaseForIndex != nil){
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
+            }
+            
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
         }
+        
+        
     }
     
     //This is key callback to present notification while the app is in foreground

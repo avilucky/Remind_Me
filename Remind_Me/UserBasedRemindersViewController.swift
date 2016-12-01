@@ -199,6 +199,10 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             activeReminders[msg.key] = reminder
         }else{
             upcomingReminders[msg.key] = reminder
+            let delegate = UIApplication.shared.delegate as? AppDelegate
+            if delegate != nil{
+                Timer.scheduledTimer(timeInterval: reminder.date.timeIntervalSinceNow, target: delegate!, selector: #selector(delegate!.updateReminders), userInfo: reminder, repeats: false)
+            }
         }
         
         print(activeReminders)
