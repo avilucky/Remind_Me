@@ -45,7 +45,7 @@ class ReminderDetailViewController: UIViewController {
     @IBAction func dismissButtonClicked() {
         
         
-        let alertController = UIAlertController(title: "Dismiss", message: "Dimiss Reminder\nTConfirm", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Dismiss", message: "Dimiss Reminder\nConfirm", preferredStyle: .alert)
         
         let actionYes = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
             print("You've pressed the Yes button");
@@ -66,8 +66,10 @@ class ReminderDetailViewController: UIViewController {
             reminder!.reminderStatus = .dismissed
             
             if(reminder!.fireBaseForIndex != nil){
-                self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+                
                 self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
+                
+                self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             }
             self.ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
             self.ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
