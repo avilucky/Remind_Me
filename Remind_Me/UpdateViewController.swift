@@ -7,32 +7,35 @@
 //
 
 import UIKit
+import Firebase
 
 class UpdateViewController: UIViewController {
 
+    var errorMessage: String?
+    var ref: FIRDatabaseReference!
+    
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
+    
     @IBAction func updateButtonPressed() {
-        let selectedDate = Date()
-        print("Selected date: \(selectedDate)")
-        
-        // For testing notifications
-        //let delegate = UIApplication.shared.delegate as? AppDelegate
-        //let reminder = Array(activeReminders.values).first!
-        
-        //print(reminder.byUser)
-        //print(reminder.fireBaseByIndex)
-        //print("Reminder latitude \(reminder.latitude!)")
-        //print("Reminder latitude \(reminder.longitude!)")
-        //delegate?.scheduleNotification(at: selectedDate, reminder: reminder)
-        //print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        //delegate?.nearBy(lat: 41.658571, lon: -91.551124, reminder: reminder)
-        //print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
+        if validateUserEntry(){
+            ref.child("users").child(currentUser!).setValue(["phone": phoneNumberTextField.text!])
+            
+            let alertController = UIAlertController(title: "Edit Profile Success", message: "Phone Number updated successfully", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        ref = FIRDatabase.database().reference()
         // Do any additional setup after loading the view.
+        
+        usernameLabel.text = currentUser!
+        phoneNumberTextField.text = contactsOnFireBase[currentUser!]!
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +43,31 @@ class UpdateViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func validateUserEntry() -> Bool{
+        let phoneNumber: String = phoneNumberTextField.text!
+        errorMessage = nil
+        
+        if phoneNumber == ""{
+            errorMessage = "Phone number can not be empty"
+        }else if phoneNumber.hasPrefix("0") || phoneNumber.characters.count != 10{
+            errorMessage = "Phone number has to be of 10 digits and can not start with a 0"
+        }else if(contactsOnFireBase[currentUser!] != phoneNumber && Array(contactsOnFireBase.values).contains(phoneNumber)){
+            errorMessage = "Phone number already registered"
+        }
+        
+        if errorMessage != nil{
+            let alertController = UIAlertController(title: "Edit Profile validation error", message: errorMessage!, preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 

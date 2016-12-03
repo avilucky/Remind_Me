@@ -26,7 +26,7 @@ var upcomingReminders: [String: Reminder] = [String: Reminder]()
 var upcomingForReminders: [String: Reminder] = [String: Reminder]()
 
 var appInBackground: Bool = false
-var contactsPhone: [CNContact] = []
+
 
 let defaults = UserDefaults.standard
 var currentUser: String?
@@ -118,37 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let actionDismissEver = UNNotificationAction(identifier: "dismissforever", title: "Dismiss forever", options: [])
         let category = UNNotificationCategory(identifier: "myCategory", actions: [actionDismiss1Hour, actionDismiss1Day, actionDismissEver], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
-
-        let contactStore = CNContactStore()
-        let keysToFetch = [
-            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-            CNContactEmailAddressesKey,
-            CNContactPhoneNumbersKey,
-            CNContactImageDataAvailableKey,
-            CNContactThumbnailImageDataKey] as [Any]
-        
-        var allContainers: [CNContainer] = []
-        do
-        {
-            allContainers = try contactStore.containers(matching: nil)
-        }
-        catch
-        {
-            print("Error fetching containers")
-        }
-        for container in allContainers
-        {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            do
-            {
-                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
-                contactsPhone.append(contentsOf: containerResults)
-            }
-            catch
-            {
-                print("Error fetching result for container")
-            }
-        }
         
         
         return true
@@ -183,6 +152,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         //print(date)
                         let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
                         
+                        let distanceString = rest.childSnapshot(forPath: "distance").value as? String
+                        
+                        var distance: Int = 200
+                        if(distanceString != nil && Int(distanceString!) != nil){
+                            distance = Int(distanceString!)!
+                        }
+                        
                         let lat = Double(rest.childSnapshot(forPath: "latitude").value as! String)
                         print("Latitude: \(lat)")
                         let lon = Double(rest.childSnapshot(forPath: "longitude").value as! String)
@@ -195,7 +171,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let forUser = rest.childSnapshot(forPath: "forUser").value as! String
                             let fireBaseForIndex = rest.childSnapshot(forPath: "fireBaseForIndex").value as! String
                             
-                            reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description, latitude: lat!, longitude: lon!)
+                            reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description, distance:distance, latitude: lat!, longitude: lon!)
                             reminder!.fireBaseForIndex = fireBaseForIndex
                         }else{
                             // landmarkbased reminder
@@ -203,10 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                             let locationName = rest.childSnapshot(forPath: "locationName").value as! String
                             
-                            
-                            let eveType: EventType = EventType.getEventTypeEnum(eventType: rest.childSnapshot(forPath: "eventType").value as! String)
-                            
-                            reminder = Reminder(byUser: byUser, date: date, description: description, locationName: locationName, latitude: lat!, longitude: lon!, eventType: eveType)
+                            reminder = Reminder(byUser: byUser, date: date, description: description, locationName: locationName, distance:distance, latitude: lat!, longitude: lon!)
                         }
                         
                         reminder!.fireBaseByIndex = rest.key
@@ -254,6 +227,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         //print("Notification Description: \(description)")
                         let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
                         //print(date)
+                        let distanceString = rest.childSnapshot(forPath: "distance").value as? String
+                        
+                        var distance: Int = 200
+                        if(distanceString != nil && Int(distanceString!) != nil){
+                            distance = Int(distanceString!)!
+                        }
+                        
                         let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
                         
                         let lat = Double(rest.childSnapshot(forPath: "latitude").value as! String)
@@ -262,7 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         let fireBaseByIndex = rest.childSnapshot(forPath: "fireBaseByIndex").value as! String
                         
-                        let reminder: Reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description, latitude: lat!, longitude: lon!)
+                        let reminder: Reminder = Reminder(forUser: forUser, byUser: byUser, date: date, description: description, distance:distance, latitude: lat!, longitude: lon!)
                         
                         reminder.fireBaseForIndex = rest.key
                         reminder.fireBaseByIndex = fireBaseByIndex
@@ -483,14 +463,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getTextDescription(_ reminder: Reminder) -> String{
-        var str = "You "
-        
-        // if reminder is nearby
-        if(reminder.eventType == .nearby){
-            str += "are nearby: "
-        }
-        // TODO if reminder is leaving or reached
-        
+        var str = "You are near: "
         
         // if reminder is user based
         if(reminder.forUser != nil){
@@ -523,8 +496,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             print("Distance \(distanceInMeters)")
             
-            if !reminder.notified && reminder.date <= Date() && distanceInMeters <= 200{
-                print("Distance less than 200")
+            if !reminder.notified && distanceInMeters <= Double(reminder.distance){
+                print("Distance less than \(reminder.distance)")
                 reminder.notified = true
                 scheduleNotification(at: Date(), reminder: reminder)
             }
@@ -637,10 +610,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         // logic to check all active reminders and notify user
         for reminder in Array(activeReminders.values){
             if(!reminder.notified){
-                // check if reminder uses nearby
-                if(reminder.forUser != nil || reminder.eventType == .nearby){
-                    nearBy(lat: myLat, lon: myLon, reminder: reminder)
-                }
+                nearBy(lat: myLat, lon: myLon, reminder: reminder)
             }
         }
         
