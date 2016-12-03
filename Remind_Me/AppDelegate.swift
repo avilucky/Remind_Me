@@ -14,6 +14,9 @@ import GooglePlaces
 import UserNotifications
 import CoreLocation
 import IQKeyboardManagerSwift
+import Contacts
+import ContactsUI
+
 
 var activeReminders: [String: Reminder] = [String: Reminder]()
 var activeForReminders: [String: Reminder] = [String: Reminder]()
@@ -23,6 +26,7 @@ var upcomingReminders: [String: Reminder] = [String: Reminder]()
 var upcomingForReminders: [String: Reminder] = [String: Reminder]()
 
 var appInBackground: Bool = false
+var contactsPhone: [CNContact] = []
 
 let defaults = UserDefaults.standard
 var currentUser: String?
@@ -115,6 +119,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let category = UNNotificationCategory(identifier: "myCategory", actions: [actionDismiss1Hour, actionDismiss1Day, actionDismissEver], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
 
+        let contactStore = CNContactStore()
+        let keysToFetch = [
+            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+            CNContactEmailAddressesKey,
+            CNContactPhoneNumbersKey,
+            CNContactImageDataAvailableKey,
+            CNContactThumbnailImageDataKey] as [Any]
+        
+        var allContainers: [CNContainer] = []
+        do
+        {
+            allContainers = try contactStore.containers(matching: nil)
+        }
+        catch
+        {
+            print("Error fetching containers")
+        }
+        for container in allContainers
+        {
+            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            do
+            {
+                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
+                contactsPhone.append(contentsOf: containerResults)
+            }
+            catch
+            {
+                print("Error fetching result for container")
+            }
+        }
         
         
         return true

@@ -33,7 +33,6 @@ class MapsViewController: UIViewController,UISearchBarDelegate, LocateOnTheMap {
         self.view.addSubview(self.googleMapsView)
         searchResultController = SearchResultsController()
         searchResultController.delegate = self
-        
     }
     override func viewDidLoad() {
         super.viewDidLoad()

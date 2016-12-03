@@ -35,11 +35,11 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
       
-        eventTypePicker.dataSource = self
-        eventTypePicker.delegate = self
         // disable the past date in date picker
         self.date.minimumDate = Date()
-            
+        self.date.tintColor = UIColor.white
+        self.date.backgroundColor = UIColor.white
+    
         // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()

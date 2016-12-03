@@ -2,7 +2,7 @@
 //  UserBasedRemindersViewController.swift
 //  Remind_Me
 //
-//  Created by Avinash Talreja on 11/5/16.
+//  Created by Ajinkya Kulkarni on 11/5/16.
 //  Copyright © 2016 Avinash Talreja. All rights reserved.
 //
 
@@ -16,10 +16,11 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     
     var countries:[String] = []
     var ref: FIRDatabaseReference!
-    var deviceContacts: [CFNumber] = []
+    var deviceContacts: [String] = []
     var firebaseContacts: [Any] = []
     var isFirstLoad: Bool = true
     var usernameArr:[String] = []
+    var commonUsernames:[String] = []
     
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
@@ -36,13 +37,19 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         ref = FIRDatabase.database().reference()
         
         super.viewDidLoad()
+        let color = UIColor(red: 43.0/255.0, green: 66.0/255.0, blue: 134.0/255.0, alpha: 1.0)
 
+        UITabBar.appearance().backgroundColor = color
+        
         // register keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         // disable the past date in date picker
         self.date.minimumDate = Date()
+        
+        self.date.tintColor = UIColor.white
+        self.date.backgroundColor = UIColor.white
         
         // place a placeholder on notification description
         
@@ -56,87 +63,26 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.isHidden = !notificationDesc.text.isEmpty
         // Do any additional setup after loading the view.
-        for cn in contacts {
-            let temp: CNPhoneNumber = cn.phoneNumbers[0].value
-            deviceContacts.append(temp.value(forKey: "digits")! as! CFNumber)
-            let strs:CFNumber = temp.value(forKey: "digits")! as! CFNumber
-            print(strs)
-            
-        }
-        //
-        print("~~~~~~~~~~~")
-        ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as! NSDictionary
-            let temp: [Any] = value.allValues
-            self.usernameArr = value.allKeys as! [String]
-            print(self.usernameArr)
-            var i : Int = 0
-            for cn in temp
+        for cn in contactsPhone {
+            if cn.phoneNumbers.first != nil{
+                let phone: CNPhoneNumber = (cn.phoneNumbers.first?.value)!
+                if phone.value(forKey: "digits") != nil {
+                    deviceContacts.append(phone.value(forKey: "digits") as! String)
+        }}}
+        
+        
+        for cn in contactsOnFireBase
+        {
+            if deviceContacts.contains(where: {$0 == cn.value})
             {
-                let values = cn as! NSDictionary
-                self.firebaseContacts.append(values.value(forKey: "phone")!)
-                let str:CFNumber = values.value(forKey: "phone")! as! CFNumber
-                print(str)
-                
-                
-                
-                
-                if self.deviceContacts.contains(where: {$0 == str}) {
-                    // it exists, do something
-                    print(true)
-                    print(self.usernameArr[i])
-                    self.countries.append(self.usernameArr[i].lowercased())
-
-                    
-                } else {
-                    // item not found
-                    print(false)
-                }
-                i += 1
+                commonUsernames.append(cn.key)
             }
             
-            // ...
-        }) { (error) in
-            print(error.localizedDescription)
         }
-        
     }
     
     
-    lazy var contacts: [CNContact] = {
-        let contactStore = CNContactStore()
-        let keysToFetch = [
-            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-            CNContactEmailAddressesKey,
-            CNContactPhoneNumbersKey,
-            CNContactImageDataAvailableKey,
-            CNContactThumbnailImageDataKey] as [Any]
-        
-        // Get all the containers
-        var allContainers: [CNContainer] = []
-        do {
-            allContainers = try contactStore.containers(matching: nil)
-        } catch {
-            print("Error fetching containers")
-        }
-        
-        var results: [CNContact] = []
-        
-        // Iterate all containers and append their contacts to our results array
-        for container in allContainers {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            
-            do {
-                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
-                results.append(contentsOf: containerResults)
-            } catch {
-                print("Error fetching results for container")
-            }
-        }
-        return results
-    }()
-    
+  
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -220,10 +166,10 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             errorMessage = "Tagged user or notification description can not be empty"
         }
         
-        print(usernameArr)
+        print(commonUsernames)
         // we can also add validation of username is associated with contact that is no such
         // user exists
-        if(!usernameArr.contains(usernameText))
+        if(!commonUsernames.contains(usernameText))
         {
             errorMessage = "Tagged user not found"
         }
@@ -280,17 +226,17 @@ extension UserBasedRemindersViewController: AutocompleteDelegate {
     }
     
     func autoCompleteItemsForSearchTerm(_ term: String) -> [AutocompletableOption] {
-        let filteredCountries = self.countries.filter { (country) -> Bool in
-            return country.lowercased().contains(term.lowercased())
+        let filteredCountries = self.commonUsernames.filter { (usernames) -> Bool in
+            return usernames.lowercased().contains(term.lowercased())
         }
         
-        let countriesAndFlags: [AutocompletableOption] = filteredCountries.map { ( country) -> AutocompleteCellData in
+        let commonUser: [AutocompletableOption] = filteredCountries.map { ( country) -> AutocompleteCellData in
             var country = country
             country.replaceSubrange(country.startIndex...country.startIndex, with: String(country.characters[country.startIndex]).lowercased())
             return AutocompleteCellData(text: country)
             }.map( { $0 as AutocompletableOption })
         
-        return countriesAndFlags
+        return commonUser
     }
     
     func autoCompleteHeight() -> CGFloat {
