@@ -8,21 +8,6 @@
 
 import Foundation
 
-enum EventType{
-    case nearby, reached, leaving
-    
-    static func getEventTypeEnum(eventType: String) -> EventType{
-        print("Event Type: \(eventType)")
-        if eventType == "nearby" {
-            return EventType.nearby
-        }else if eventType == "leaving"{
-            return EventType.leaving
-        }else{
-            return EventType.reached
-        }
-    }
-}
-
 enum ReminderStatus{
     case active, upcoming, dismissed
 }
@@ -37,13 +22,13 @@ class Reminder{
     var locationName: String!
     var latitude: Double!
     var longitude: Double!
-    var eventType: EventType = .nearby
+    var distance: Int
     var reminderStatus: ReminderStatus
     var notified: Bool = false
     
     // this initializer will be used never , kept 
     // for reference, TODO will be removed in the final phase
-    init(fireBaseForIndex: String, fireBaseByIndex: String, forUser: String, byUser: String, date: Date, description: String, locationName: String, latitude: Double, longitude: Double, eventType: EventType, reminderStatus: ReminderStatus) {
+    init(fireBaseForIndex: String, fireBaseByIndex: String, forUser: String, byUser: String, date: Date, description: String, locationName: String, latitude: Double, longitude: Double, distance: Int, reminderStatus: ReminderStatus) {
         
         self.fireBaseForIndex = fireBaseForIndex
         self.fireBaseByIndex = fireBaseByIndex
@@ -54,16 +39,17 @@ class Reminder{
         self.locationName = locationName
         self.latitude = latitude
         self.longitude = longitude
-        self.eventType = eventType
+        self.distance = distance
         self.reminderStatus = reminderStatus
     }
     
     // this initializer will be used when saving user based reminders
-    init(forUser: String, byUser: String, date: Date, description: String, latitude: Double, longitude: Double) {
+    init(forUser: String, byUser: String, date: Date, description: String, distance: Int, latitude: Double, longitude: Double) {
         self.forUser = forUser
         self.byUser = byUser
         self.date = date
         self.description = description
+        self.distance = distance
         self.latitude = latitude
         self.longitude = longitude
         self.reminderStatus = .upcoming
@@ -74,7 +60,7 @@ class Reminder{
     }
     
     // this initializer will be used when storing location based reminders
-    init(byUser: String, date: Date, description: String, locationName: String, latitude: Double, longitude: Double, eventType: EventType) {
+    init(byUser: String, date: Date, description: String, locationName: String, distance: Int, latitude: Double, longitude: Double) {
         
         self.byUser = byUser
         self.date = date
@@ -82,7 +68,7 @@ class Reminder{
         self.locationName = locationName
         self.latitude = latitude
         self.longitude = longitude
-        self.eventType = eventType
+        self.distance = distance
         self.reminderStatus = .upcoming
         
         if isActive(date){
@@ -108,16 +94,6 @@ class Reminder{
             return "upcoming"
         }else{
             return "dismissed"
-        }
-    }
-    
-    func getEventType() -> String{
-        if self.eventType == .leaving{
-            return "leaving"
-        }else if self.eventType == .nearby{
-            return "nearby"
-        }else{
-            return "reached"
         }
     }
 }

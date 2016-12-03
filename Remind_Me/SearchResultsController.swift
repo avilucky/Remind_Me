@@ -80,7 +80,7 @@ class SearchResultsController: UITableViewController {
                     
                     let array = dic["results"]! as! NSArray
                     
-                    
+                    print("Location result: ")
                     print(array)
                     print(array[0])
                     print(type(of: array[0]))

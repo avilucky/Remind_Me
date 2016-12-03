@@ -9,18 +9,16 @@
 import UIKit
 import Firebase
 
-class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate {
+class LandmarkBasedRemindersViewController: UIViewController, UITextViewDelegate {
 
     var ref: FIRDatabaseReference!
     
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
     var placeholderLabel : UILabel!
-    @IBOutlet weak var eventTypePicker: UIPickerView!
-    
     @IBOutlet weak var locationAddress: UITextField!
-   
-    let pickerData = ["nearby", "leaving", "reached"]
+    @IBOutlet weak var distanceSlider: UISlider!
+    @IBOutlet weak var selectedDistance: UILabel!
     
     var lat: Double = 0
     var lon: Double = 0
@@ -43,11 +41,12 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Notification description"
+        placeholderLabel.numberOfLines = 3
+        placeholderLabel.text = "Notification description (can't contain\n multiple lines and has to be shorter\n than 120 characters)"
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (notificationDesc.font?.pointSize)!)
         placeholderLabel.sizeToFit()
         notificationDesc.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPoint(x: 80, y: (notificationDesc.font?.pointSize)! / 2)
+        placeholderLabel.frame.origin = CGPoint(x: notificationDesc.frame.minX, y: (notificationDesc.font?.pointSize)! / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.isHidden = !notificationDesc.text.isEmpty
         // Do any additional setup after loading the view.
@@ -67,16 +66,10 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         return 1
     }
     
-    // The number of rows of data
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let distance = Int(distanceSlider.value)
+        selectedDistance.text = distance.description + " m."
     }
-    
-    // The data to return for the row and component (column) that's being passed in
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
-    }
-    
     /*
     // MARK: - Navigation
 
@@ -100,15 +93,17 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
             self.present(alertController, animated: true, completion: nil)
             return
         }
-        let eveType: EventType = EventType.getEventTypeEnum(eventType: pickerData[eventTypePicker.selectedRow(inComponent: 0)])
+        let distance = Int(distanceSlider.value)
+        //test distance slider value
+        print("\(distanceSlider.value) to \(distance)")
         
-        let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: locationAddress.text!, latitude: lat, longitude: lon, eventType: eveType)
+        let reminder: Reminder = Reminder(byUser: currentUser!, date: date.date, description: notificationDesc.text!, locationName: locationAddress.text!, distance: distance,latitude: lat, longitude: lon)
         
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
         
         reminder.fireBaseByIndex = msg.key
         
-        let value = ["byUser": reminder.byUser, "fireBaseByIndex": reminder.fireBaseByIndex!, "date": reminder.date.description, "description": reminder.description, "locationName": reminder.locationName!, "latitude": reminder.latitude!.description, "longitude": reminder.longitude!.description, "eventType": reminder.getEventType(), "reminderStatus": reminder.getReminderStatus()]
+        let value = ["byUser": reminder.byUser, "fireBaseByIndex": reminder.fireBaseByIndex!, "date": reminder.date.description, "description": reminder.description, "locationName": reminder.locationName!, "latitude": reminder.latitude!.description, "longitude": reminder.longitude!.description, "distance": distance.description, "reminderStatus": reminder.getReminderStatus()]
         
         msg.setValue(value)
         
@@ -135,8 +130,14 @@ class LandmarkBasedRemindersViewController: UIViewController, UIPickerViewDataSo
         let locationName: String = locationAddress.text!
         errorMessage = nil
         
-        if locationName == "" || description == ""{
-            errorMessage = "Location or notification description can not be empty"
+        if locationName == "" && description == ""{
+            errorMessage = "Location and notification description can not be empty"
+        }else if locationName == ""{
+            errorMessage = "Location can not be empty"
+        }else if description == ""{
+            errorMessage = "Notification description can not be empty"
+        }else if description.contains("\n") || description.characters.count > 120{
+            errorMessage = "Notification description can't contain multiple lines and has to be shorter than 120 characters"
         }
         
         // we can also add validation of username is associated with contact that is no such

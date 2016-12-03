@@ -75,7 +75,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         // if not user based it must be landmark based
         else{
-            detailText += "\(reminder.getEventType()) landmark: \(reminder.locationName!)"
+            detailText += "Landmark: \(reminder.locationName!)"
         }
         
         return detailText

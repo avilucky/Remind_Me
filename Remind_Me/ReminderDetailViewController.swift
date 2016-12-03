@@ -31,7 +31,7 @@ class ReminderDetailViewController: UIViewController {
             reminders[index].notified = true;
             print(false)
         }
-    
+        self.performSegue(withIdentifier: "unwindToHomeFromDetail", sender: nil)
     }
     var ref: FIRDatabaseReference!
 
@@ -76,6 +76,7 @@ class ReminderDetailViewController: UIViewController {
             self.dismissButtonOutlet.isEnabled = false
             self.reminderStatus.text = "dismissed"
             
+            self.performSegue(withIdentifier: "unwindToHomeFromDetail", sender: nil)
         }
         
         let actionNo = UIAlertAction(title: "No", style: .default) { (action:UIAlertAction) in
