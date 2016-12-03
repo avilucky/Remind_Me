@@ -27,7 +27,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         homeViewTable.delegate = self
         
         defaults.set(0, forKey: "index")
-        
+
         updateActiveReminders()
         // Do any additional setup after loading the view.
     }
@@ -56,7 +56,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "remindercell")! as UITableViewCell
         
         cell.textLabel!.text = reminders[cellNum].description
-        
+        cell.detailTextLabel!.numberOfLines = 3
         cell.detailTextLabel!.text = getDetailText(reminders[cellNum])
         
         return cell;
@@ -133,7 +133,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
 
-    
     /*
     // MARK: - Navigation
 

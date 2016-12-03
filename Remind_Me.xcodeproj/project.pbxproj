@@ -10,6 +10,9 @@
 		104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */; };
 		CC5073061DDA5A9E00900B79 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073041DDA5A9E00900B79 /* MapsViewController.swift */; };
 		CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */; };
+		CC68408E1DF29658000F95BE /* DismissedReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68408D1DF29658000F95BE /* DismissedReminderDetailViewController.swift */; };
+		CC6840901DF29CD7000F95BE /* UpcomingReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68408F1DF29CD7000F95BE /* UpcomingReminderDetailViewController.swift */; };
+		CC6840921DF2A411000F95BE /* ActiveReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6840911DF2A411000F95BE /* ActiveReminderDetailViewController.swift */; };
 		CCB4EB9A1DEA1F54005174A7 /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */; };
 		CCBB39081DEECA890082A6D5 /* ReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBB39071DEECA890082A6D5 /* ReminderDetailViewController.swift */; };
 		CCC2A3381DE6849800705BAA /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */; };
@@ -45,6 +48,9 @@
 		3565C6EFC8AB34B7C16F9E99 /* Pods-Remind_Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Remind_Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Remind_Me/Pods-Remind_Me.release.xcconfig"; sourceTree = "<group>"; };
 		CC5073041DDA5A9E00900B79 /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		CC68408D1DF29658000F95BE /* DismissedReminderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissedReminderDetailViewController.swift; sourceTree = "<group>"; };
+		CC68408F1DF29CD7000F95BE /* UpcomingReminderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingReminderDetailViewController.swift; sourceTree = "<group>"; };
+		CC6840911DF2A411000F95BE /* ActiveReminderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveReminderDetailViewController.swift; sourceTree = "<group>"; };
 		CCB4EB991DEA1F54005174A7 /* UpdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		CCBB39071DEECA890082A6D5 /* ReminderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderDetailViewController.swift; sourceTree = "<group>"; };
 		CCC2A32F1DE6849800705BAA /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
@@ -146,6 +152,9 @@
 				CEC594341DC517C20061A6DA /* RegisterViewController.swift */,
 				CEDC2D1B1DCE4C6F007AF322 /* Reminder.swift */,
 				CCBB39071DEECA890082A6D5 /* ReminderDetailViewController.swift */,
+				CC68408D1DF29658000F95BE /* DismissedReminderDetailViewController.swift */,
+				CC68408F1DF29CD7000F95BE /* UpcomingReminderDetailViewController.swift */,
+				CC6840911DF2A411000F95BE /* ActiveReminderDetailViewController.swift */,
 				CC5073051DDA5A9E00900B79 /* SearchResultsController.swift */,
 				CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */,
 				CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */,
@@ -314,13 +323,16 @@
 				CCC2A3391DE6849800705BAA /* Autocomplete.swift in Sources */,
 				CCC2A33D1DE6849800705BAA /* AutoCompleteViewController.swift in Sources */,
 				CCB4EB9A1DEA1F54005174A7 /* UpdateViewController.swift in Sources */,
+				CC6840901DF29CD7000F95BE /* UpcomingReminderDetailViewController.swift in Sources */,
 				CEDC2D1C1DCE4C6F007AF322 /* Reminder.swift in Sources */,
 				CCBB39081DEECA890082A6D5 /* ReminderDetailViewController.swift in Sources */,
 				CE2433131DEE3987005A55D1 /* ActiveRemindersViewController.swift in Sources */,
 				CE2433151DEE3987005A55D1 /* UpcomingRemindersViewController.swift in Sources */,
 				CEA8813A1DBE6FCB00AA37D8 /* Remind_Me.xcdatamodeld in Sources */,
+				CC68408E1DF29658000F95BE /* DismissedReminderDetailViewController.swift in Sources */,
 				CEDC2D201DCE5BC4007AF322 /* LandmarkBasedRemindersViewController.swift in Sources */,
 				CC5073071DDA5A9E00900B79 /* SearchResultsController.swift in Sources */,
+				CC6840921DF2A411000F95BE /* ActiveReminderDetailViewController.swift in Sources */,
 				CCC2A3401DE6849800705BAA /* TableViewDelegate.swift in Sources */,
 				CEC594351DC517C20061A6DA /* RegisterViewController.swift in Sources */,
 			);

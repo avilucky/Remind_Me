@@ -3,7 +3,7 @@
 //  Remind_Me
 //
 //  Created by macbook_user on 11/27/16.
-//  Copyright © 2016 Avinash Talreja. All rights reserved.
+//  Copyright © 2016 Ajinkya Kulkarni. All rights reserved.
 //
 
 import UIKit
@@ -15,11 +15,11 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
 
     @IBOutlet weak var contactsTableView: UITableView!
     
-    var deviceContacts: [CFNumber] = []
+    var deviceContacts: [String] = []
     var firebaseContacts: [Any] = []
     var commonUsernames: [String] = []
     var commonContactsWithNames: [String: String] = [String: String]()
-    var commonContactsWithUsernames: [String: CFNumber] = [String: CFNumber]()
+    var commonContactsWithUsernames: [String: String] = [String: String]()
     var ref: FIRDatabaseReference!
 
     override func viewDidLoad() {
@@ -28,65 +28,32 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         contactsTableView.delegate = self
         contactsTableView.dataSource = self
-        
-        for cn in contacts {
-            let temp: CNPhoneNumber = cn.phoneNumbers[0].value
-            deviceContacts.append(temp.value(forKey: "digits")! as! CFNumber)
-            let strs:CFNumber = temp.value(forKey: "digits")! as! CFNumber
-            
-            
-        }
-        ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as! NSDictionary
-            let temp: [Any] = value.allValues
-            var usernameArr:[String] = []
-            usernameArr = value.allKeys as! [String]
-            var i : Int = 0
-            for cn in temp
-            {
-                let values = cn as! NSDictionary
-                self.firebaseContacts.append(values.value(forKey: "phone")!)
-                let str:CFNumber = values.value(forKey: "phone")! as! CFNumber
-                if self.deviceContacts.contains(where: {$0 == str}) {
-                    // it exists, do something
-                self.commonContactsWithUsernames[usernameArr[i]] = str
-                    
-                    
-                    
-                } else {
-                    // item not found
-                }
-                for cn in self.contacts{
-                    
-                    let temp: CNPhoneNumber = cn.phoneNumbers[0].value
-                    let strs:CFNumber = temp.value(forKey: "digits")! as! CFNumber
-                    let name = cn.givenName + cn.familyName
-                    if(strs == str)
-                    {
-                        self.commonContactsWithNames[usernameArr[i]] = name
-                        self.commonUsernames.append(usernameArr[i])
-                    }
-                    
+       
 
-                }
-                i += 1
-            }
-            print(self.commonContactsWithUsernames)
-            print(self.commonContactsWithNames)
-            print(self.commonUsernames)
+        for cn in contactsPhone
+        {
+            if cn.phoneNumbers.first != nil{
+            let phone: CNPhoneNumber = (cn.phoneNumbers.first?.value)!
+                if phone.value(forKey: "digits") != nil {
+            deviceContacts.append(phone.value(forKey: "digits") as! String)
             
-            self.updateContactsOnView()
-            
-            // ...
-        }) { (error) in
-            print(error.localizedDescription)
-        }
+            let first: String = cn.givenName
+            let last: String = cn.familyName
+            let full:String = first + last
+        commonContactsWithUsernames[phone.value(forKey: "digits") as! String] = full
+                }}}
         
-        // Do any additional setup after loading the view.
-    
-    
+        for cn in contactsOnFireBase
+        {
+            if deviceContacts.contains(where: {$0 == cn.value})
+            {
+                commonContactsWithNames[cn.key] = commonContactsWithUsernames[cn.value]
+                commonUsernames.append(cn.key)
+            }
+            
+        }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -121,40 +88,7 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
-    lazy var contacts: [CNContact] = {
-        let contactStore = CNContactStore()
-        let keysToFetch = [
-            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-            CNContactEmailAddressesKey,
-            CNContactPhoneNumbersKey,
-            CNContactImageDataAvailableKey,
-            CNContactThumbnailImageDataKey] as [Any]
-        
-        // Get all the containers
-        var allContainers: [CNContainer] = []
-        do {
-            allContainers = try contactStore.containers(matching: nil)
-        } catch {
-            print("Error fetching containers")
-        }
-        
-        var results: [CNContact] = []
-        
-        // Iterate all containers and append their contacts to our results array
-        for container in allContainers {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            
-            do {
-                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
-                results.append(contentsOf: containerResults)
-            } catch {
-                print("Error fetching results for container")
-            }
-        }
-        return results
-    }()
-
-
+    
     /*
     // MARK: - Navigation
 

@@ -22,7 +22,7 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
         
         dismissedViewTable.dataSource = self
         dismissedViewTable.delegate = self
-        
+
         updateReminders()
         // Do any additional setup after loading the view.
     }
@@ -95,4 +95,48 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
         reminders.append(contentsOf: Array(dismissedForReminders.values))
         dismissedViewTable.reloadData()
     }
+    @IBAction func prepareForUnwindDis(for unwindSegue: UIStoryboardSegue) {
+        updateReminders()
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        /*  if (segue.destinationViewController is PlayerDetailController) {
+         let child:PlayerDetailController = segue.destinationViewController as! PlayerDetailController
+         //let selectedRow = self.tableViewOutlet.indexPathForSelectedRow
+         //let defaults = NSUserDefaults.standardUserDefaults()
+         //let arrayOfPlayer = defaults.stringArrayForKey("PlayerName")
+         child.playerName = text
+         print("prepare for seque called")
+         }*/
+        
+        if (segue.identifier == "showDismissedDetail") {
+            
+            // initialize new view controller and cast it as your view controller
+            let child:DismissedReminderDetailViewController = segue.destination as! DismissedReminderDetailViewController
+            // your new view controller should have property that will store passed value
+            //child.playersName = name
+        }
+        
+    }
+    
+    
+    // two optional UITableViewDelegate functions
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        defaults.set(indexPath[1], forKey: "index")
+        
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        _ = tableView.cellForRow(at: indexPath)
+        //        name = cell!.textLabel!.text!
+        performSegue(withIdentifier: "showDismissedDetail", sender: self)
+        
+    }
+
 }

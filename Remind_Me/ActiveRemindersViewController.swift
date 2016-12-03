@@ -18,7 +18,8 @@ class ActiveRemindersViewController: UIViewController, UITableViewDataSource, UI
 
         activeViewTable.dataSource = self
         activeViewTable.delegate = self
-        
+        self.activeViewTable.backgroundColor = UIColor.lightGray
+
         updateReminders()
         // Do any additional setup after loading the view.
     }
@@ -88,4 +89,49 @@ class ActiveRemindersViewController: UIViewController, UITableViewDataSource, UI
         reminders.append(contentsOf: Array(activeForReminders.values))
         activeViewTable.reloadData()
     }
+    
+    @IBAction func prepareForUnwindAct(for unwindSegue: UIStoryboardSegue) {
+        updateReminders()
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        /*  if (segue.destinationViewController is PlayerDetailController) {
+         let child:PlayerDetailController = segue.destinationViewController as! PlayerDetailController
+         //let selectedRow = self.tableViewOutlet.indexPathForSelectedRow
+         //let defaults = NSUserDefaults.standardUserDefaults()
+         //let arrayOfPlayer = defaults.stringArrayForKey("PlayerName")
+         child.playerName = text
+         print("prepare for seque called")
+         }*/
+        
+        if (segue.identifier == "showActiveDetail") {
+            
+            // initialize new view controller and cast it as your view controller
+            let child:ActiveReminderDetailViewController = segue.destination as! ActiveReminderDetailViewController
+            // your new view controller should have property that will store passed value
+            //child.playersName = name
+        }
+        
+    }
+    
+    
+    // two optional UITableViewDelegate functions
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        defaults.set(indexPath[1], forKey: "index")
+        
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        //        name = cell!.textLabel!.text!
+        performSegue(withIdentifier: "showActiveDetail", sender: self)
+        
+    }
+
 }
