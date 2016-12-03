@@ -21,14 +21,15 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
     var isFirstLoad: Bool = true
     var usernameArr:[String] = []
     var commonUsernames:[String] = []
+    var contactsPhone: [CNContact] = []
     
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var notificationDesc: UITextView!
     var placeholderLabel : UILabel!
     @IBOutlet weak var username: UITextField!
-    
-    
     @IBOutlet weak var tagUsers: UITextField!
+    @IBOutlet weak var distanceSlider: UISlider!
+    @IBOutlet weak var selectedDistance: UILabel!
     
     var registerSuccess:Bool = true
     var errorMessage:String?
@@ -55,14 +56,17 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Notification description"
+        placeholderLabel.numberOfLines = 3
+        placeholderLabel.text = "Notification description (can't contain\n multiple lines and has to be shorter\n than 120 characters)"
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (notificationDesc.font?.pointSize)!)
         placeholderLabel.sizeToFit()
         notificationDesc.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPoint(x: 80, y: (notificationDesc.font?.pointSize)! / 2)
+        placeholderLabel.frame.origin = CGPoint(x: notificationDesc.frame.minX, y: (notificationDesc.font?.pointSize)! / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.isHidden = !notificationDesc.text.isEmpty
         // Do any additional setup after loading the view.
+        
+        populateDeviceContacts()
         for cn in contactsPhone {
             if cn.phoneNumbers.first != nil{
                 let phone: CNPhoneNumber = (cn.phoneNumbers.first?.value)!
@@ -102,6 +106,10 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func slideChangeEvent(_ sender: UISlider) {
+        let distance = Int(distanceSlider.value)
+        selectedDistance.text = distance.description + " m."
+    }
     
 
     /*
@@ -127,8 +135,10 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             self.present(alertController, animated: true, completion: nil)
             return
         }
-        
-        let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!, latitude: 0.0, longitude: 0.0)
+        let distance = Int(distanceSlider.value)
+        //test distance slider value
+        print("\(distanceSlider.value) to \(distance)")
+        let reminder: Reminder = Reminder(forUser: username.text!, byUser: currentUser!, date: date.date, description: notificationDesc.text!, distance: distance, latitude: 0.0, longitude: 0.0)
         
         let msg = ref.child("reminders").child(currentUser!).childByAutoId()
         let forMsg = ref.child("forReminders").child(reminder.forUser).childByAutoId()
@@ -136,7 +146,7 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         reminder.fireBaseByIndex = msg.key
         reminder.fireBaseForIndex = forMsg.key
         
-        let value = ["forUser": reminder.forUser!, "fireBaseByIndex": reminder.fireBaseByIndex!, "fireBaseForIndex": reminder.fireBaseForIndex!, "byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "latitude": "0.0", "longitude": "0.0", "reminderStatus": reminder.getReminderStatus()]
+        let value = ["forUser": reminder.forUser!, "fireBaseByIndex": reminder.fireBaseByIndex!, "fireBaseForIndex": reminder.fireBaseForIndex!, "byUser": reminder.byUser, "date": reminder.date.description, "description": reminder.description, "distance": distance.description, "latitude": "0.0", "longitude": "0.0", "reminderStatus": reminder.getReminderStatus()]
         
         msg.setValue(value)
         forMsg.setValue(value)
@@ -162,11 +172,17 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
         let usernameText: String = username.text!
         errorMessage = nil
         
-        if usernameText == "" || description == ""{
-            errorMessage = "Tagged user or notification description can not be empty"
+        if usernameText == "" && description == ""{
+            errorMessage = "Tagged user and notification description can not be empty"
+        }else if usernameText == ""{
+            errorMessage = "Tagged user can not be empty"
+        }else if description == ""{
+            errorMessage = "Notification description can not be empty"
+        }else if description.contains("\n") || description.characters.count > 120{
+            errorMessage = "Notification description can't contain multiple lines and has to be shorter than 120 characters"
         }
         
-        print(commonUsernames)
+        // print(commonUsernames)
         // we can also add validation of username is associated with contact that is no such
         // user exists
         if(!commonUsernames.contains(usernameText))
@@ -202,6 +218,40 @@ class UserBasedRemindersViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
+    
+    func populateDeviceContacts(){
+        let contactStore = CNContactStore()
+        let keysToFetch = [
+            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+            CNContactEmailAddressesKey,
+            CNContactPhoneNumbersKey,
+            CNContactImageDataAvailableKey,
+            CNContactThumbnailImageDataKey] as [Any]
+        
+        var allContainers: [CNContainer] = []
+        do
+        {
+            allContainers = try contactStore.containers(matching: nil)
+        }
+        catch
+        {
+            print("Error fetching containers")
+        }
+        for container in allContainers
+        {
+            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            do
+            {
+                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
+                contactsPhone.append(contentsOf: containerResults)
+            }
+            catch
+            {
+                print("Error fetching result for container")
+            }
+        }
+    }
+    
 //    func autoCompleteTextField() -> UITextField{
 //    return tagUsers
 //    }

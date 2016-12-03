@@ -21,6 +21,7 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
     var commonContactsWithNames: [String: String] = [String: String]()
     var commonContactsWithUsernames: [String: String] = [String: String]()
     var ref: FIRDatabaseReference!
+    var contactsPhone: [CNContact] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
         contactsTableView.delegate = self
         contactsTableView.dataSource = self
        
-
+        populateDeviceContacts()
         for cn in contactsPhone
         {
             if cn.phoneNumbers.first != nil{
@@ -87,7 +88,38 @@ class ContactsViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell;
     }
     
-    
+    func populateDeviceContacts(){
+        let contactStore = CNContactStore()
+        let keysToFetch = [
+            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+            CNContactEmailAddressesKey,
+            CNContactPhoneNumbersKey,
+            CNContactImageDataAvailableKey,
+            CNContactThumbnailImageDataKey] as [Any]
+        
+        var allContainers: [CNContainer] = []
+        do
+        {
+            allContainers = try contactStore.containers(matching: nil)
+        }
+        catch
+        {
+            print("Error fetching containers")
+        }
+        for container in allContainers
+        {
+            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            do
+            {
+                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
+                contactsPhone.append(contentsOf: containerResults)
+            }
+            catch
+            {
+                print("Error fetching result for container")
+            }
+        }
+    }
     
     /*
     // MARK: - Navigation
