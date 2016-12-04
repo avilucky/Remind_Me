@@ -41,12 +41,11 @@ class LandmarkBasedRemindersViewController: UIViewController, UITextViewDelegate
         // place a placeholder on notification description
         notificationDesc.delegate = self
         placeholderLabel = UILabel()
-        placeholderLabel.numberOfLines = 3
-        placeholderLabel.text = "Notification description (can't contain\n multiple lines and has to be shorter\n than 120 characters)"
+        placeholderLabel.text = "Notification description"
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (notificationDesc.font?.pointSize)!)
         placeholderLabel.sizeToFit()
         notificationDesc.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPoint(x: notificationDesc.frame.minX, y: (notificationDesc.font?.pointSize)! / 2)
+        placeholderLabel.frame.origin = CGPoint(x: 80, y: (notificationDesc.font?.pointSize)! / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.isHidden = !notificationDesc.text.isEmpty
         // Do any additional setup after loading the view.
@@ -136,8 +135,6 @@ class LandmarkBasedRemindersViewController: UIViewController, UITextViewDelegate
             errorMessage = "Location can not be empty"
         }else if description == ""{
             errorMessage = "Notification description can not be empty"
-        }else if description.contains("\n") || description.characters.count > 120{
-            errorMessage = "Notification description can't contain multiple lines and has to be shorter than 120 characters"
         }
         
         // we can also add validation of username is associated with contact that is no such

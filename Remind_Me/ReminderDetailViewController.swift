@@ -11,8 +11,9 @@ import Firebase
 
 class ReminderDetailViewController: UIViewController {
 
+    var reminder: Reminder!
     
-    @IBOutlet weak var reminderDescription: UILabel!
+    @IBOutlet weak var reminderDescription: UITextView!
     
     @IBOutlet weak var reminderDate: UILabel!
     
@@ -20,27 +21,29 @@ class ReminderDetailViewController: UIViewController {
     
     @IBOutlet weak var notifySwitch: UISwitch!
     
-    @IBAction func switchClicked() {
-        if notifySwitch.isOn
-        {
-            reminders[index].notified = false;
-            print(true)
-        }
-        else
-        {
-            reminders[index].notified = true;
-            print(false)
-        }
-        self.performSegue(withIdentifier: "unwindToHomeFromDetail", sender: nil)
-    }
     var ref: FIRDatabaseReference!
-
+    
     @IBOutlet weak var dismissButtonOutlet: UIButton!
     
     @IBOutlet weak var reminderStatus: UILabel!
     
     @IBOutlet weak var notifyLabel: UILabel!
     
+    @IBOutlet weak var distanceLabel: UILabel!
+    
+    @IBAction func switchClicked() {
+        if notifySwitch.isOn
+        {
+            reminder.notified = false;
+            print(true)
+        }
+        else
+        {
+            reminder.notified = true;
+            print(false)
+        }
+        self.performSegue(withIdentifier: "unwindToHomeFromDetail", sender: nil)
+    }
     
     @IBAction func dismissButtonClicked() {
         
@@ -55,7 +58,7 @@ class ReminderDetailViewController: UIViewController {
             // dismiss the reminder
             
             let dismissedDate = Date()
-            let reminderByIndex = self.reminders[self.index].fireBaseByIndex
+            let reminderByIndex = self.reminder.fireBaseByIndex
             
             // move this reminder from activeReminders to dismissed reminders
             dismissedReminders[reminderByIndex!] = activeReminders[reminderByIndex!]
@@ -89,58 +92,33 @@ class ReminderDetailViewController: UIViewController {
         
         
     }
-    
-
-    
-    
-    
-    var index: Int = 0
-    var reminders: [Reminder] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = FIRDatabase.database().reference()
-
+        
         reminderUser.numberOfLines = 0
-        reminderDescription.numberOfLines = 0
         reminderDate.numberOfLines = 0
         
-        reminders = Array(activeReminders.values)
-        reminders.append(contentsOf: Array(activeForReminders.values))
-
+        reminderDescription.text = reminder.description
         
-        
-        if let indexNum:Int = defaults.integer(forKey: "index")
-        {
-            index = indexNum
-        }
-        print("~~~~~~~")
-
-        reminderDescription.text = reminders[index].description
-        
-        reminderStatus.text = reminders[index].getReminderStatus()
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
-        let dateString = dateFormatter.string(from: reminders[index].date)
+        reminderStatus.text = reminder.getReminderStatus()
+        distanceLabel.text = reminder.distance.description + " m."
+        let dateString = globalDateFormatter.string(from: reminder.date)
         reminderDate.text = dateString
         
         
-        if reminders[index].forUser != nil{
-            if(reminders[index].forUser! == currentUser!){
-                reminderUser.text = reminders[index].forUser
-            }else{
-                reminderUser.text = reminders[index].forUser
-            }
+        if reminder.forUser != nil{
+            reminderUser.text = reminder.forUser
         }
             // if not user based it must be landmark based
         else{
-            reminderUser.text = reminders[index].locationName
+            reminderUser.text = reminder.locationName
         }
         
-        notifySwitch.isOn = !reminders[index].notified
+        notifySwitch.isOn = !reminder.notified
         
-        if currentUser != reminders[index].byUser
+        if currentUser != reminder.byUser
         {
             dismissButtonOutlet.isHidden = true
             notifyLabel.isHidden = true
@@ -148,7 +126,7 @@ class ReminderDetailViewController: UIViewController {
         }
         
         
-        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
