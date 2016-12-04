@@ -12,19 +12,23 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
 
     @IBOutlet weak var dismissedViewTable: UITableView!
     var reminders: [Reminder] = []
-    let dateFormatter = DateFormatter()
+    var selectedReminder: Reminder!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dateFormatter.dateFormat = "EEE, MMM d, yyyy - h:mm a"
-        dateFormatter.timeZone = NSTimeZone.local
-        
+        //print("dismissed view load")
         dismissedViewTable.dataSource = self
         dismissedViewTable.delegate = self
 
         updateReminders()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.isViewLoaded{
+            //print("update reminders called")
+            updateReminders()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,8 +61,6 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
         
         let cellNum:Int = indexPath.row
         
-        print(cellNum)
-        print(reminders.count)
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "dismissedremindercell")! as UITableViewCell
         
         cell.textLabel!.text = reminders[cellNum].description
@@ -85,7 +87,7 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
         }
         detailText += "\n"
         
-        detailText += "Dismissed date: \(dateFormatter.string(from: reminder.date))"
+        detailText += "Dismissed date: \(globalDateFormatter.string(from: reminder.date))"
         print(detailText)
         return detailText
     }
@@ -103,40 +105,25 @@ class DismissedRemindersViewController: UIViewController, UITableViewDataSource,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        /*  if (segue.destinationViewController is PlayerDetailController) {
-         let child:PlayerDetailController = segue.destinationViewController as! PlayerDetailController
-         //let selectedRow = self.tableViewOutlet.indexPathForSelectedRow
-         //let defaults = NSUserDefaults.standardUserDefaults()
-         //let arrayOfPlayer = defaults.stringArrayForKey("PlayerName")
-         child.playerName = text
-         print("prepare for seque called")
-         }*/
-        
         if (segue.identifier == "showDismissedDetail") {
             
             // initialize new view controller and cast it as your view controller
             let child:DismissedReminderDetailViewController = segue.destination as! DismissedReminderDetailViewController
             // your new view controller should have property that will store passed value
-            //child.playersName = name
+            child.reminder = selectedReminder
         }
-        
     }
     
     
     // two optional UITableViewDelegate functions
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        defaults.set(indexPath[1], forKey: "index")
-        
+        selectedReminder = reminders[indexPath.row]
         return indexPath
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        _ = tableView.cellForRow(at: indexPath)
-        //        name = cell!.textLabel!.text!
-        performSegue(withIdentifier: "showDismissedDetail", sender: self)
-        
+        print("did select user \(indexPath.row)")
     }
 
 }

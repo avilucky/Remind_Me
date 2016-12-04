@@ -12,19 +12,23 @@ class UpcomingRemindersViewController: UIViewController, UITableViewDataSource, 
 
     @IBOutlet weak var upcomingViewTable: UITableView!
     var reminders: [Reminder] = []
-    let dateFormatter = DateFormatter()
+    var selectedReminder: Reminder!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dateFormatter.dateFormat = "EEE, MMM d, yyyy - h:mm a"
-        dateFormatter.timeZone = NSTimeZone.local
-        
+        //print("upcoming view load")
         upcomingViewTable.dataSource = self
         upcomingViewTable.delegate = self
 
         updateReminders()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.isViewLoaded{
+            //print("update reminders called")
+            updateReminders()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,8 +61,6 @@ class UpcomingRemindersViewController: UIViewController, UITableViewDataSource, 
         
         let cellNum:Int = indexPath.row
         
-        print(cellNum)
-        print(reminders.count)
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "upcomingremindercell")! as UITableViewCell
         
         cell.textLabel!.text = reminders[cellNum].description
@@ -85,7 +87,7 @@ class UpcomingRemindersViewController: UIViewController, UITableViewDataSource, 
         }
         detailText += "\n"
         
-        detailText += "Event begins: \(dateFormatter.string(from: reminder.date))"
+        detailText += "Event begins: \(globalDateFormatter.string(from: reminder.date))"
         print(detailText)
         return detailText
     }
@@ -118,26 +120,20 @@ class UpcomingRemindersViewController: UIViewController, UITableViewDataSource, 
             // initialize new view controller and cast it as your view controller
             let child:UpcomingReminderDetailViewController = segue.destination as! UpcomingReminderDetailViewController
             // your new view controller should have property that will store passed value
-            //child.playersName = name
+            child.reminder = selectedReminder
         }
-        
     }
     
     
     // two optional UITableViewDelegate functions
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        defaults.set(indexPath[1], forKey: "index")
-        
+        selectedReminder = reminders[indexPath.row]
         return indexPath
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        _ = tableView.cellForRow(at: indexPath)
-        //        name = cell!.textLabel!.text!
-        performSegue(withIdentifier: "showUpcomingDetail", sender: self)
-        
+        print("did select user \(indexPath.row)")
     }
 
 
