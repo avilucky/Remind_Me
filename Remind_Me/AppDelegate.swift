@@ -33,7 +33,7 @@ var currentUser: String?
 
 var myLat: Double = 0.0
 var myLon: Double = 0.0
-
+let globalDateFormatter = DateFormatter()
 var contactsOnFireBase: [String:String] = [String:String]()
 
 @UIApplicationMain
@@ -51,6 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // set format of the date to be used across the application
+        globalDateFormatter.dateFormat = "EEE, MMM d, yyyy - h:mm a"
+        globalDateFormatter.timeZone = NSTimeZone.local
+        
         // enable IQKeyboardManager
         IQKeyboardManager.sharedManager().enable = true
         

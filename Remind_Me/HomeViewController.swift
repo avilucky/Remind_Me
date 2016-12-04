@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var homeViewTable: UITableView!
     var reminders: [Reminder] = []
     var indexNum:Int = 0
-    
+    var selectedReminder: Reminder!
 
     
     override func viewDidLoad() {
@@ -51,8 +51,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let cellNum:Int = indexPath.row
         
-        print(cellNum)
-        print(reminders.count)
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "remindercell")! as UITableViewCell
         
         cell.textLabel!.text = reminders[cellNum].description
@@ -93,44 +91,26 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             updateActiveReminders()
     }
     
-    
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        /*  if (segue.destinationViewController is PlayerDetailController) {
-         let child:PlayerDetailController = segue.destinationViewController as! PlayerDetailController
-         //let selectedRow = self.tableViewOutlet.indexPathForSelectedRow
-         //let defaults = NSUserDefaults.standardUserDefaults()
-         //let arrayOfPlayer = defaults.stringArrayForKey("PlayerName")
-         child.playerName = text
-         print("prepare for seque called")
-         }*/
-        
         if (segue.identifier == "showDetail") {
             
             // initialize new view controller and cast it as your view controller
             let child:ReminderDetailViewController = segue.destination as! ReminderDetailViewController
             // your new view controller should have property that will store passed value
-            //child.playersName = name
+            child.reminder = selectedReminder
         }
-        
     }
     
     
     // two optional UITableViewDelegate functions
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        defaults.set(indexPath[1], forKey: "index")
-        
+        selectedReminder = reminders[indexPath.row]
         return indexPath
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.cellForRow(at: indexPath)
-//        name = cell!.textLabel!.text!
-        performSegue(withIdentifier: "showDetail", sender: self)
-        
+        print("did select user \(indexPath.row)")
     }
 
     /*
