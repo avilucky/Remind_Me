@@ -197,11 +197,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             upcomingReminders[rest.key] = reminder
                             Timer.scheduledTimer(timeInterval: reminder!.date.timeIntervalSinceNow, target: self, selector: #selector(self.updateReminders), userInfo: reminder!, repeats: false)
                         }
-                    }else if activeReminders[rest.key] != nil && activeReminders[rest.key]?.forUser != nil && self.locationUpdated(rest, activeReminders[rest.key]!){
-                        // TODO logic to check if location updated for an active reminder
-                        // call notify if required by the reminder
+                    }else if activeReminders[rest.key] != nil && activeReminders[rest.key]!.forUser != nil && self.locationUpdated(rest, activeReminders[rest.key]!){
                         print("Location for reminder updated")
-                        self.nearBy(lat: myLat, lon: myLon, reminder: activeReminders[rest.key]!)
+                    }else if upcomingReminders[rest.key] != nil && upcomingReminders[rest.key]!.forUser != nil && self.locationUpdated(rest, upcomingReminders[rest.key]!){
+                        print("Location for reminder updated")
                     }
                 }
                 
@@ -312,15 +311,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //print(rest.childSnapshot(forPath: "latitude").value as! String)
         //print("Lat \(lat!) - \(reminder.latitude!)")
         //print("Lon \(lon!) - \(reminder.longitude!)")
-        
-        if lat == reminder.latitude && lon == reminder.longitude{
-            print("It's same")
-            return false
-        }
-        
+    
         reminder.latitude = lat!
         reminder.longitude = lon!
-        print("Updated")
         
         return true
     }
@@ -336,6 +329,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             upcomingReminders.removeValue(forKey: reminder.fireBaseByIndex)
             changed = true
         }else if upcomingForReminders[reminder.fireBaseForIndex] != nil{
+            print("called")
             activeForReminders[reminder.fireBaseForIndex] = reminder
             upcomingForReminders.removeValue(forKey: reminder.fireBaseForIndex)
             changed = true
@@ -344,6 +338,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if changed{
             let homeViewController = self.window?.rootViewController as! HomeViewController
             homeViewController.updateActiveReminders()
+            updateRemindersOnView()
         }
     }
     
@@ -507,17 +502,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // check if any tab bar controller is opened and call reload on their table data view
+    func updateRemindersOnView(){
+        print("Check current view controller")
+        print(self.window?.currentViewController() ?? "Not found")
+        let tabBar = self.window?.currentViewController() as? UITabBarController
+        if tabBar != nil{
+            if tabBar!.selectedIndex == 0{
+                (tabBar!.viewControllers![0] as! ActiveRemindersViewController).updateReminders()
+            }else if tabBar!.selectedIndex == 0{
+                (tabBar!.viewControllers![1] as! DismissedRemindersViewController).updateReminders()
+            }else{
+                (tabBar!.viewControllers![2] as! UpcomingRemindersViewController).updateReminders()
+            }
+        }
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
+        var dismissCalled: Bool = false
+        
         // dismiss the reminder
         if response.actionIdentifier == "dismissforever" {
+            
             let dismissedDate = Date()
             let str = response.notification.request.identifier
             let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
             print("FirebaseByIndex from \(str): \(reminderByIndex)")
+            
+            if(activeReminders[reminderByIndex] == nil){
+                let alertController = UIAlertController(title: "Dismiss Error", message: "The notification is of a stale reminder. Please go to the app and perform appropriate action from there", preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+                
+                self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                return
+            }
             
             // move this reminder from activeReminders to dismissed reminders
             dismissedReminders[reminderByIndex] = activeReminders[reminderByIndex]
@@ -528,12 +551,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             reminder!.reminderStatus = .dismissed
             
             if(reminder!.fireBaseForIndex != nil){
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             }
-            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
-            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             
+            dismissCalled = true
             let homeViewController = self.window?.rootViewController as! HomeViewController
             homeViewController.updateActiveReminders()
         }else if response.actionIdentifier.hasPrefix("dismiss"){
@@ -549,6 +571,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let reminderByIndex = str.substring(from: str.index(after: "remindMe:".endIndex))
             print("FirebaseByIndex from \(str): \(reminderByIndex)")
             
+            if(activeReminders[reminderByIndex] == nil){
+                let alertController = UIAlertController(title: "Dismiss Error", message: "The notification is of a stale reminder. Please go to the app and perform appropriate action from there", preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default, handler: nil))
+                
+                self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                return
+            }
+            
             // move this reminder from activeReminders to dismissed reminders
             upcomingReminders[reminderByIndex] = activeReminders[reminderByIndex]
             activeReminders.removeValue(forKey: reminderByIndex)
@@ -559,18 +590,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             reminder!.reminderStatus = .upcoming
             
             if(reminder!.fireBaseForIndex != nil){
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
-                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+                ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             }
             
-            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
-            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
+            ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             
+            dismissCalled = true;
             let homeViewController = self.window?.rootViewController as! HomeViewController
             homeViewController.updateActiveReminders()
         }
         
-        
+        if dismissCalled{
+            updateRemindersOnView()
+        }
     }
     
     //This is key callback to present notification while the app is in foreground
@@ -607,9 +639,13 @@ extension AppDelegate: CLLocationManagerDelegate {
         
         // update location at all active for reminders who require this user's location
         for reminder in Array(activeForReminders.values){
-            ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).child("latitude").setValue(latitude)
-            ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).child("longitude").setValue(longitude)
+            ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).updateChildValues(["latitude": latitude, "longitude": longitude])
         }
+        
+        // uncomment this if problem still persists
+        //for reminder in Array(upcomingForReminders.values){
+        //    ref.child("reminders").child(reminder.byUser).child(reminder.fireBaseByIndex).updateChildValues(["latitude": latitude, "longitude": longitude])
+        //}
         
         // logic to check all active reminders and notify user
         for reminder in Array(activeReminders.values){
