@@ -25,6 +25,7 @@
 		CCC2A33F1DE6849800705BAA /* TableViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */; };
 		CCC2A3401DE6849800705BAA /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */; };
 		CCC6AA571DEB66DB004D5978 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC6AA561DEB66DB004D5978 /* ContactsViewController.swift */; };
+		CE1B6A811DF46C4E00696FEA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1B6A801DF46C4E00696FEA /* AdSupport.framework */; };
 		CE2433131DEE3987005A55D1 /* ActiveRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2433101DEE3987005A55D1 /* ActiveRemindersViewController.swift */; };
 		CE2433141DEE3987005A55D1 /* DismissedRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2433111DEE3987005A55D1 /* DismissedRemindersViewController.swift */; };
 		CE2433151DEE3987005A55D1 /* UpcomingRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2433121DEE3987005A55D1 /* UpcomingRemindersViewController.swift */; };
@@ -63,6 +64,7 @@
 		CCC2A3361DE6849800705BAA /* TableViewDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDatasource.swift; sourceTree = "<group>"; };
 		CCC2A3371DE6849800705BAA /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
 		CCC6AA561DEB66DB004D5978 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		CE1B6A801DF46C4E00696FEA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		CE2433101DEE3987005A55D1 /* ActiveRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveRemindersViewController.swift; sourceTree = "<group>"; };
 		CE2433111DEE3987005A55D1 /* DismissedRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissedRemindersViewController.swift; sourceTree = "<group>"; };
 		CE2433121DEE3987005A55D1 /* UpcomingRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingRemindersViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1B6A811DF46C4E00696FEA /* AdSupport.framework in Frameworks */,
 				104805240C530370118511E4 /* Pods_Remind_Me.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +101,7 @@
 		05338161134BE297AB4C73D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE1B6A801DF46C4E00696FEA /* AdSupport.framework */,
 				0A4FC5618B4CC319DD623D14 /* Pods_Remind_Me.framework */,
 			);
 			name = Frameworks;

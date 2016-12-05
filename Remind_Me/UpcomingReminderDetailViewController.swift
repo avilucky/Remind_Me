@@ -29,6 +29,21 @@ class UpcomingReminderDetailViewController: UIViewController {
     
     @IBAction func dismissButtonClicked() {
         
+        let reminderByIndex = self.reminder.fireBaseByIndex
+        
+        if(upcomingReminders[reminderByIndex!] == nil){
+            let alertController = UIAlertController(title: "Dismiss Error", message: "The detail view is of a stale reminder. You will be redirected to table view and you can perform appropriate action from there", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Return", style:UIAlertActionStyle.default) {
+                (UIAlertAction) in
+                
+                self.performSegue(withIdentifier: "unwindToUpcomingFromView", sender: nil)
+            })
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+            return
+        }
         
         let alertController = UIAlertController(title: "Dismiss", message: "Dimiss Reminder\nConfirm", preferredStyle: .alert)
         
@@ -38,7 +53,6 @@ class UpcomingReminderDetailViewController: UIViewController {
             // dismiss the reminder
             
             let dismissedDate = Date()
-            let reminderByIndex = self.reminder.fireBaseByIndex
             
             // move this reminder from upcomingReminders to dismissed reminders
             dismissedReminders[reminderByIndex!] = upcomingReminders[reminderByIndex!]
@@ -49,13 +63,10 @@ class UpcomingReminderDetailViewController: UIViewController {
             reminder!.reminderStatus = .dismissed
             
             if(reminder!.fireBaseForIndex != nil){
-                
-                self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("date").setValue(reminder!.date.description)
-                
-                self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
+                self.ref.child("forReminders").child(reminder!.forUser).child(reminder!.fireBaseForIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             }
-            self.ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("reminderStatus").setValue(reminder!.getReminderStatus())
-            self.ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).child("date").setValue(reminder!.date.description)
+            self.ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
+            
             self.dismissButtonOutlet.isEnabled = false
             self.reminderStatus.text = "dismissed"
             
