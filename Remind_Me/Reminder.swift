@@ -77,8 +77,7 @@ class Reminder{
     }
     
     func isActive(_ date : Date) -> Bool{
-        // add 2 minutes to the current Date to determine the status of the reminder
-        let nowDate: Date = Date.init().addingTimeInterval(120)
+        let nowDate: Date = Date.init()
         
         if date <= nowDate{
             return true
