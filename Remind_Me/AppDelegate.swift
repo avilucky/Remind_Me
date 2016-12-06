@@ -369,6 +369,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if currentUser != nil{
             let homeViewController = self.window?.rootViewController as! HomeViewController
             homeViewController.updateActiveReminders()
+            updateRemindersOnView()
         }
     }
 
@@ -499,6 +500,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Distance less than \(reminder.distance)")
                 reminder.notified = true
                 scheduleNotification(at: Date(), reminder: reminder)
+                let homeViewController = self.window?.rootViewController as! HomeViewController
+                homeViewController.updateActiveReminders()
+                updateRemindersOnView()
             }
         }
     }
@@ -556,8 +560,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             
             dismissCalled = true
-            let homeViewController = self.window?.rootViewController as! HomeViewController
-            homeViewController.updateActiveReminders()
         }else if response.actionIdentifier.hasPrefix("dismiss"){
             var newDate = Date()
             
@@ -596,11 +598,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             ref.child("reminders").child(reminder!.byUser).child(reminder!.fireBaseByIndex).updateChildValues(["date": reminder!.date.description, "reminderStatus": reminder!.getReminderStatus()])
             
             dismissCalled = true;
-            let homeViewController = self.window?.rootViewController as! HomeViewController
-            homeViewController.updateActiveReminders()
         }
         
         if dismissCalled{
+            let homeViewController = self.window?.rootViewController as! HomeViewController
+            homeViewController.updateActiveReminders()
             updateRemindersOnView()
         }
     }

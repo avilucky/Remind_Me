@@ -54,8 +54,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "remindercell")! as UITableViewCell
         
         cell.textLabel!.text = reminders[cellNum].description
-        cell.detailTextLabel!.numberOfLines = 3
+        cell.detailTextLabel!.numberOfLines = 2
         cell.detailTextLabel!.text = getDetailText(reminders[cellNum])
+        
+        if(reminders[cellNum].notified){
+            cell.backgroundColor = UIColor.yellow
+        }else{
+            cell.backgroundColor = UIColor.white
+        }
         
         return cell;
     }
