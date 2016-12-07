@@ -206,6 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let homeViewController = self.window?.rootViewController as! HomeViewController
                 homeViewController.updateActiveReminders()
+                self.updateRemindersOnView()
                 
                 print(activeReminders.count)
                 print(upcomingReminders.count)
@@ -267,6 +268,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let homeViewController = self.window?.rootViewController as! HomeViewController
                 homeViewController.updateActiveReminders()
+                self.updateRemindersOnView()
                 
                 print(activeForReminders.count)
                 print(upcomingForReminders.count)
@@ -278,6 +280,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // check to see if status updated of a for Reminder and update status accordingly
     func statusUpdated(_ rest: FIRDataSnapshot, _ reminder: Reminder) -> Bool{
         let reminderStatus = rest.childSnapshot(forPath: "reminderStatus").value as! String
+        let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
         
         if reminderStatus != reminder.getReminderStatus(){
             // check if updated to dismissed
@@ -287,7 +290,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 reminder.reminderStatus = .dismissed
                 reminder.date = date
                 activeForReminders.removeValue(forKey: reminder.fireBaseForIndex)
-            }else if reminderStatus == "upcoming"{
+            }else if reminderStatus == "upcoming" && date > Date(){
+                print("Status will be updated")
                 let date = self.getDateFromString(rest.childSnapshot(forPath: "date").value as! String)
                 upcomingForReminders[reminder.fireBaseForIndex] = reminder
                 reminder.reminderStatus = .upcoming
@@ -513,12 +517,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(self.window?.currentViewController() ?? "Not found")
         let tabBar = self.window?.currentViewController() as? UITabBarController
         if tabBar != nil{
+            print("Selected Index - \(tabBar!.selectedIndex)")
             if tabBar!.selectedIndex == 0{
-                (tabBar!.viewControllers![0] as! ActiveRemindersViewController).updateReminders()
+                let viewController = tabBar!.viewControllers![0] as? ActiveRemindersViewController
+                if(viewController != nil){
+                    viewController!.updateReminders()
+                }
             }else if tabBar!.selectedIndex == 2{
-                (tabBar!.viewControllers![2] as! DismissedRemindersViewController).updateReminders()
+                let viewController =  tabBar!.viewControllers![2] as? DismissedRemindersViewController
+                if(viewController != nil){
+                    viewController!.updateReminders()
+                }
             }else{
-                (tabBar!.viewControllers![1] as! UpcomingRemindersViewController).updateReminders()
+                let viewController = tabBar!.viewControllers![1] as? UpcomingRemindersViewController
+                if(viewController != nil){
+                    viewController!.updateReminders()
+                }
             }
         }
     }
