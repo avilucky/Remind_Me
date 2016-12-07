@@ -515,10 +515,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if tabBar != nil{
             if tabBar!.selectedIndex == 0{
                 (tabBar!.viewControllers![0] as! ActiveRemindersViewController).updateReminders()
-            }else if tabBar!.selectedIndex == 0{
-                (tabBar!.viewControllers![1] as! DismissedRemindersViewController).updateReminders()
+            }else if tabBar!.selectedIndex == 2{
+                (tabBar!.viewControllers![2] as! DismissedRemindersViewController).updateReminders()
             }else{
-                (tabBar!.viewControllers![2] as! UpcomingRemindersViewController).updateReminders()
+                (tabBar!.viewControllers![1] as! UpcomingRemindersViewController).updateReminders()
             }
         }
     }
