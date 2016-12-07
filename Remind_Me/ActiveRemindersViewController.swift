@@ -69,9 +69,15 @@ class ActiveRemindersViewController: UIViewController, UITableViewDataSource, UI
         cell.detailTextLabel!.text = getDetailText(reminders[cellNum])
         
         if(reminders[cellNum].notified){
-            cell.backgroundColor = UIColor.yellow
+            cell.backgroundColor = UIColor(red:0.17, green:0.26, blue:0.53, alpha:0.45)
+            cell.textLabel?.backgroundColor = UIColor.clear
+            cell.detailTextLabel?.backgroundColor = UIColor.clear
+            cell.textLabel?.textColor = UIColor.white
+            cell.detailTextLabel?.textColor = UIColor.white
         }else{
             cell.backgroundColor = UIColor.white
+            cell.textLabel?.textColor = UIColor.black
+            cell.detailTextLabel?.textColor = UIColor.black
         }
         
         return cell;
