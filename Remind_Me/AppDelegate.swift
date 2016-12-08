@@ -520,17 +520,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Selected Index - \(tabBar!.selectedIndex)")
             if tabBar!.selectedIndex == 0{
                 let viewController = tabBar!.viewControllers![0] as? ActiveRemindersViewController
-                if(viewController != nil){
+                if(viewController != nil && viewController!.isViewLoaded){
                     viewController!.updateReminders()
                 }
             }else if tabBar!.selectedIndex == 2{
                 let viewController =  tabBar!.viewControllers![2] as? DismissedRemindersViewController
-                if(viewController != nil){
+                if(viewController != nil && viewController!.isViewLoaded){
                     viewController!.updateReminders()
                 }
             }else{
                 let viewController = tabBar!.viewControllers![1] as? UpcomingRemindersViewController
-                if(viewController != nil){
+                if(viewController != nil && viewController!.isViewLoaded){
                     viewController!.updateReminders()
                 }
             }
